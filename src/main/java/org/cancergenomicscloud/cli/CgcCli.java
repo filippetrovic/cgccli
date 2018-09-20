@@ -13,7 +13,11 @@ import java.util.stream.Stream;
 
 public class CgcCli {
 
-	private HashMap<String, CliCommandHandler> handlers = new HashMap<>();
+	private HashMap<String, CliCommandHandler> handlers;
+
+	CgcCli() {
+		handlers = new HashMap<>();
+	}
 
 	public void execute(String[] args) {
 
