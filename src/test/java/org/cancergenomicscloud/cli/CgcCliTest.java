@@ -2,6 +2,7 @@ package org.cancergenomicscloud.cli;
 
 import org.assertj.core.api.Assertions;
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
+import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +34,7 @@ public class CgcCliTest {
 	@Test
 	public void shouldInvokeCommandHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder()
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
 				.withHandler("cmd", handler)
 				.get();
 
@@ -53,7 +54,7 @@ public class CgcCliTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionForIllegalCommand() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder()
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
 				.withHandler("cmd", handler)
 				.get();
 
@@ -67,7 +68,7 @@ public class CgcCliTest {
 	@Test
 	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder()
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
 				.withHandler("cmd", handler)
 				.withHandler("not_used_command_1", dummyHandler)
 				.withHandler("not_used_command_2", dummyHandler)

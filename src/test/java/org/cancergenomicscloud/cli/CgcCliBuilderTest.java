@@ -1,6 +1,7 @@
 package org.cancergenomicscloud.cli;
 
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
+import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class CgcCliBuilderTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionIfHandlerIsAlreadyRegistered() throws Exception {
 
-		new CgcCliBuilder()
+		new CgcCliBuilder(new CliArgumentsParser())
 				.withHandler("cmd", handler)
 				.withHandler("cmd", dummyHandler)
 				.get();
