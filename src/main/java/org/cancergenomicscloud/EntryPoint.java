@@ -6,7 +6,7 @@ import org.cancergenomicscloud.cli.CgcCli;
 import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.JsonResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
-import org.cancergenomicscloud.cli.handler.ListProjectsCommand;
+import org.cancergenomicscloud.cli.handler.ListProjectsCommandHandler;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
@@ -25,7 +25,7 @@ public class EntryPoint {
 		try {
 
 			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-					.withHandler("projects list", new ListProjectsCommand(httpClient, formatter, output))
+					.withHandler("projects list", new ListProjectsCommandHandler(httpClient, formatter, output))
 					.get();
 
 			cgcCli.execute(args);

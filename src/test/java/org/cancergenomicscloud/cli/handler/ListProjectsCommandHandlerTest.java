@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
  */
 
 @RunWith(MockitoJUnitRunner.class)
-public class ListProjectsCommandTest {
+public class ListProjectsCommandHandlerTest {
 
 	@Mock
 	private HttpClient httpClient;
@@ -35,7 +35,7 @@ public class ListProjectsCommandTest {
 	private StringOutput stringOutput;
 
 	@InjectMocks
-	private ListProjectsCommand handler;
+	private ListProjectsCommandHandler handler;
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {

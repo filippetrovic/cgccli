@@ -12,13 +12,13 @@ import java.util.Collections;
  * Created by Filip.
  */
 
-public class ListProjectsCommand implements CliCommandHandler {
+public class ListProjectsCommandHandler implements CliCommandHandler {
 
 	private HttpClient httpClient;
 	private ResponseFormatter responseFormatter;
 	private StringOutput stringOutput;
 
-	public ListProjectsCommand(HttpClient httpClient, ResponseFormatter responseFormatter, StringOutput stringOutput) {
+	public ListProjectsCommandHandler(HttpClient httpClient, ResponseFormatter responseFormatter, StringOutput stringOutput) {
 		this.httpClient = httpClient;
 		this.responseFormatter = responseFormatter;
 		this.stringOutput = stringOutput;
