@@ -4,10 +4,8 @@ import org.cancergenomicscloud.cli.http.CgcResponse; /**
  * Created by Filip.
  */
 
-public class ResponseFormatter {
+public interface ResponseFormatter {
 
-	public String format(CgcResponse response) {
-		return null;
-	}
+	String format(CgcResponse response);
 
 }
