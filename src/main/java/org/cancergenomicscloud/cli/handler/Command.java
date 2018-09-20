@@ -1,6 +1,7 @@
 package org.cancergenomicscloud.cli.handler;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Filip.
@@ -9,14 +10,16 @@ import java.util.List;
 public class Command {
 
 	private final String commandCode;
+	private final String authToken;
 	private final List<String> args;
 
-	public static Command of(String commandCode, List<String> args) {
-		return new Command(commandCode, args);
+	public static Command of(String commandCode, String authToken, List<String> args) {
+		return new Command(commandCode, authToken, args);
 	}
 
-	private Command(String commandCode, List<String> args) {
+	private Command(String commandCode, String authToken, List<String> args) {
 		this.commandCode = commandCode;
+		this.authToken = authToken;
 		this.args = args;
 	}
 
@@ -28,28 +31,30 @@ public class Command {
 		return args;
 	}
 
+	public String getAuthToken() {
+		return authToken;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-
 		Command command = (Command) o;
-
-		if (commandCode != null ? !commandCode.equals(command.commandCode) : command.commandCode != null) return false;
-		return args != null ? args.equals(command.args) : command.args == null;
+		return Objects.equals(commandCode, command.commandCode) &&
+				Objects.equals(authToken, command.authToken) &&
+				Objects.equals(args, command.args);
 	}
 
 	@Override
 	public int hashCode() {
-		int result = commandCode != null ? commandCode.hashCode() : 0;
-		result = 31 * result + (args != null ? args.hashCode() : 0);
-		return result;
+		return Objects.hash(commandCode, authToken, args);
 	}
 
 	@Override
 	public String toString() {
 		return "Command{" +
 				"commandCode='" + commandCode + '\'' +
+				", authToken='" + authToken + '\'' +
 				", args=" + args +
 				'}';
 	}

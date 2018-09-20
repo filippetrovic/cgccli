@@ -38,11 +38,11 @@ public class CgcCliTest {
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"first_lvl", "second_lvl", "param1", "param2"});
+		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "param1", "param2"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("first_lvl second_lvl", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", "token123", Arrays.asList("param1", "param2")));
 
 	}
 
@@ -54,7 +54,7 @@ public class CgcCliTest {
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"illegalCommand secondPart", "param1", "param2"});
+		cgcCli.execute(new String[]{"--token", "token123", "illegalCommand secondPart", "param1", "param2"});
 
 		// then - exception is thrown
 
@@ -70,11 +70,11 @@ public class CgcCliTest {
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"first_lvl", "second_lvl", "param1", "param2"});
+		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "param1", "param2"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("first_lvl second_lvl", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", "token123", Arrays.asList("param1", "param2")));
 
 	}
 }
