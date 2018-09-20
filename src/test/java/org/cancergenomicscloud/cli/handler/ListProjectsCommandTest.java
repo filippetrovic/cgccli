@@ -35,7 +35,7 @@ public class ListProjectsCommandTest {
 
 		// then
 		Mockito.verify(httpClient)
-				.post(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/projects",
+				.get(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/projects",
 						Collections.singletonMap("X-SBG-Auth-Token", "token123")));
 	}
 }

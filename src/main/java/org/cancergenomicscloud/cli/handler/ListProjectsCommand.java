@@ -24,7 +24,7 @@ public class ListProjectsCommand implements CliCommandHandler {
 				"https://cgc-api.sbgenomics.com/v2/projects",
 				Collections.singletonMap("X-SBG-Auth-Token", command.getAuthToken()));
 
-		httpClient.post(cgcRequest);
+		httpClient.get(cgcRequest);
 	}
 
 }
