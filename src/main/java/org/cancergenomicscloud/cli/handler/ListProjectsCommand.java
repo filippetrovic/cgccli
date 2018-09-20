@@ -1,5 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
+import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.HttpClient;
 
 import java.util.Collections;
@@ -18,7 +19,12 @@ public class ListProjectsCommand implements CliCommandHandler {
 
 	@Override
 	public void handleCommand(Command command) {
-		httpClient.post("https://cgc-api.sbgenomics.com/v2/projects", Collections.singletonMap("X-SBG-Auth-Token", "token123"));
+
+		final CgcRequest cgcRequest = CgcRequest.of(
+				"https://cgc-api.sbgenomics.com/v2/projects",
+				Collections.singletonMap("X-SBG-Auth-Token", command.getAuthToken()));
+
+		httpClient.post(cgcRequest);
 	}
 
 }

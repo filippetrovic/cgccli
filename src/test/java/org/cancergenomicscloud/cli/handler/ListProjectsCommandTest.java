@@ -1,5 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
+import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,7 @@ public class ListProjectsCommandTest {
 
 		// then
 		Mockito.verify(httpClient)
-				.post("https://cgc-api.sbgenomics.com/v2/projects", Collections.singletonMap("X-SBG-Auth-Token", "token123"));
+				.post(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/projects",
+						Collections.singletonMap("X-SBG-Auth-Token", "token123")));
 	}
 }
