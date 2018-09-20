@@ -33,8 +33,9 @@ public class CgcCliTest {
 	@Test
 	public void shouldInvokeCommandHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCli();
-		cgcCli.registerHandler("cmd", handler);
+		CgcCli cgcCli = new CgcCliBuilder()
+				.withHandler("cmd", handler)
+				.get();
 
 		// when
 		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
@@ -52,8 +53,9 @@ public class CgcCliTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionForIllegalCommand() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCli();
-		cgcCli.registerHandler("cmd", handler);
+		CgcCli cgcCli = new CgcCliBuilder()
+				.withHandler("cmd", handler)
+				.get();
 
 		// when
 		cgcCli.execute(new String[]{"illegalCommand", "param1", "param2"});
@@ -79,10 +81,11 @@ public class CgcCliTest {
 	@Test
 	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCli();
-		cgcCli.registerHandler("cmd", handler);
-		cgcCli.registerHandler("not_used_command_1", dummyHandler);
-		cgcCli.registerHandler("not_used_command_2", dummyHandler);
+		CgcCli cgcCli = new CgcCliBuilder()
+				.withHandler("cmd", handler)
+				.withHandler("not_used_command_1", dummyHandler)
+				.withHandler("not_used_command_2", dummyHandler)
+				.get();
 
 		// when
 		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
