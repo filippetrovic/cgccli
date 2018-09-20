@@ -1,10 +1,10 @@
 package org.cancergenomicscloud.cli;
 
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
+import org.cancergenomicscloud.cli.handler.Command;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Filip.
@@ -23,15 +23,14 @@ public class CgcCli {
 
 	public void execute(String[] args) {
 
-		final String commandCode = args[0];
+		final Command command = cliArgumentsParser.parseCommand(args);
 
-		if (!handlers.containsKey(commandCode)) {
-			throw new IllegalArgumentException(String.format("\"%s\" is not a valid command code", commandCode));
+		if (!handlers.containsKey(command.getCommandCode())) {
+			throw new IllegalArgumentException(String.format("\"%s\" is not a valid command code", command.getCommandCode()));
 		}
 
-		final List<String> params = cliArgumentsParser.parseCommand(args);
-
-		handlers.get(commandCode).handleCommand(params);
+		handlers.get(command.getCommandCode())
+				.handleCommand(command);
 	}
 
 	public void registerHandler(String commandCode, CliCommandHandler handler) {

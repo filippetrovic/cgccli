@@ -1,17 +1,16 @@
 package org.cancergenomicscloud.cli;
 
-import org.assertj.core.api.Assertions;
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
+import org.cancergenomicscloud.cli.handler.Command;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Created by Filip.
@@ -42,12 +41,8 @@ public class CgcCliTest {
 		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
 
 		// then
-		final ArgumentCaptor<List<String>> argumentCaptor = ArgumentCaptor.forClass(List.class);
-		Mockito.verify(handler).handleCommand(argumentCaptor.capture());
-
-		Assertions.assertThat(argumentCaptor.getValue())
-				.isNotEmpty()
-				.containsExactly("param1", "param2");
+		Mockito.verify(handler)
+				.handleCommand(Command.of("cmd", Arrays.asList("param1", "param2")));
 
 	}
 
@@ -78,11 +73,8 @@ public class CgcCliTest {
 		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
 
 		// then
-		final ArgumentCaptor<List<String>> argumentCaptor = ArgumentCaptor.forClass(List.class);
-		Mockito.verify(handler).handleCommand(argumentCaptor.capture());
+		Mockito.verify(handler)
+				.handleCommand(Command.of("cmd", Arrays.asList("param1", "param2")));
 
-		Assertions.assertThat(argumentCaptor.getValue())
-				.isNotEmpty()
-				.containsExactly("param1", "param2");
 	}
 }
