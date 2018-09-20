@@ -45,4 +45,12 @@ public class Command {
 		result = 31 * result + (args != null ? args.hashCode() : 0);
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "Command{" +
+				"commandCode='" + commandCode + '\'' +
+				", args=" + args +
+				'}';
+	}
 }
