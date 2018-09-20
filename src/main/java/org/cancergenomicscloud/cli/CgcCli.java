@@ -16,11 +16,17 @@ public class CgcCli {
 
 	public void execute(String[] args) {
 
-		final List<String> params = Stream.of(args)
-				.skip(1)
-				.collect(Collectors.toList());
+		final String commandCode = args[0];
 
-		handler.handleCommand(params);
+		if ("cmd".equals(commandCode)) {
+			final List<String> params = Stream.of(args)
+					.skip(1)
+					.collect(Collectors.toList());
+
+			handler.handleCommand(params);
+		} else {
+			throw new IllegalArgumentException(String.format("%s is not a valid command code", commandCode));
+		}
 	}
 
 	public void registerHandler(String cmd, CliCommandHandler handler) {

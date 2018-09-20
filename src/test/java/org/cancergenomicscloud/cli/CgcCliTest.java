@@ -46,4 +46,17 @@ public class CgcCliTest {
 
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionForIllegalCommand() throws Exception {
+		// given
+		CgcCli cgcCli = new CgcCli();
+		cgcCli.registerHandler("cmd", handler);
+
+		// when
+		cgcCli.execute(new String[]{"illegalCommand", "param1", "param2"});
+
+		// then - exception is thrown
+
+	}
+
 }
