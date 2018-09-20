@@ -21,9 +21,9 @@ public class CgcCli {
 		this.handlers = new HashMap<>();
 	}
 
-	public void execute(String[] args) {
+	public void execute(String[] cliInputArgs) {
 
-		final Command command = cliArgumentsParser.parseCommand(args);
+		final Command command = cliArgumentsParser.parseCommand(cliInputArgs);
 
 		if (!handlers.containsKey(command.getCommandCode())) {
 			throw new IllegalArgumentException(String.format("\"%s\" is not a valid command code", command.getCommandCode()));

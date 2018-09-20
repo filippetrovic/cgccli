@@ -15,23 +15,24 @@ public class CliArgumentsParser {
 	private static final int COMMAND_CODE_LEN = 2;
 	public static final String COMMAND_CODE_PARTS_DELIMITER = " ";
 
-	public Command parseCommand(String[] args) {
+	public Command parseCommand(String[] cliInputArgs) {
 		return Command.of(
-				extractCommandCode(args),
-				extractCommandArguments(args)
+				extractCommandCode(cliInputArgs),
+				extractCommandArguments(cliInputArgs)
 		);
 	}
 
-	private String extractCommandCode(String[] args) {
-		return Stream.of(args)
+	private String extractCommandCode(String[] cliInputArgs) {
+		return Stream.of(cliInputArgs)
 				.limit(COMMAND_CODE_LEN)
 				.collect(Collectors.joining(COMMAND_CODE_PARTS_DELIMITER));
 	}
 
-	private List<String> extractCommandArguments(String[] args) {
-		return Stream.of(args)
+	private List<String> extractCommandArguments(String[] cliInputArgs) {
+		return Stream.of(cliInputArgs)
 				.skip(COMMAND_CODE_LEN)
 				.collect(Collectors.toList());
 	}
+
 
 }
