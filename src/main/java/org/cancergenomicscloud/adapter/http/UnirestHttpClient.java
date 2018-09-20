@@ -21,6 +21,7 @@ public class UnirestHttpClient implements HttpClient {
 
 			final HttpResponse<String> httpResponse = Unirest.get(cgcRequest.getPath())
 					.headers(cgcRequest.getHeaders())
+					.queryString(cgcRequest.getQueryParams())
 					.asString();
 
 			return CgcResponse.of(httpResponse.getBody(),

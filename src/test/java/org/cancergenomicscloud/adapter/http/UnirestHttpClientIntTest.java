@@ -55,8 +55,9 @@ public class UnirestHttpClientIntTest {
 	public void shouldReturnAllFileForProject() throws Exception {
 
 		// given
-		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files?project=fpetrovic92/copy-of-simons-genome-diversity-project-sgdp",
-				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"));
+		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files",
+				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"),
+				Collections.singletonMap("project", "fpetrovic92/copy-of-simons-genome-diversity-project-sgdp"));
 
 		// when
 		final CgcResponse response = httpClient.get(request);
