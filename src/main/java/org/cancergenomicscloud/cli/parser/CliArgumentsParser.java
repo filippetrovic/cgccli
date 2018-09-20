@@ -18,10 +18,14 @@ public class CliArgumentsParser {
 	private static final int TOKEN_INDEX = 1;
 
 	public Command parseCommand(String[] cliInputArgs) {
-		return Command.of(
-				extractCommandCode(cliInputArgs),
-				extractToken(cliInputArgs),
-				extractCommandArguments(cliInputArgs));
+		try {
+			return Command.of(
+					extractCommandCode(cliInputArgs),
+					extractToken(cliInputArgs),
+					extractCommandArguments(cliInputArgs));
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Failed to parse arguments.");
+		}
 	}
 
 	private String extractToken(String[] cliInputArgs) {
