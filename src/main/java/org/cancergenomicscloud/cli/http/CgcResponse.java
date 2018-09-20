@@ -1,5 +1,7 @@
 package org.cancergenomicscloud.cli.http;
 
+import java.util.Objects;
+
 /**
  * Created by Filip.
  */
@@ -30,6 +32,20 @@ public class CgcResponse {
 
 	public String getStatusCodeText() {
 		return statusCodeText;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CgcResponse that = (CgcResponse) o;
+		return statusCode == that.statusCode &&
+				Objects.equals(result, that.result);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(result, statusCode);
 	}
 
 	@Override
