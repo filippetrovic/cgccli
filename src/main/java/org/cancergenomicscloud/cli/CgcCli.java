@@ -20,7 +20,7 @@ public class CgcCli {
 		final String commandCode = args[0];
 
 		if (!handlers.containsKey(commandCode)) {
-			throw new IllegalArgumentException(String.format("%s is not a valid command code", commandCode));
+			throw new IllegalArgumentException(String.format("\"%s\" is not a valid command code", commandCode));
 		}
 
 		final List<String> params = Stream.of(args)
@@ -31,6 +31,9 @@ public class CgcCli {
 	}
 
 	public void registerHandler(String commandCode, CliCommandHandler handler) {
+		if (handlers.containsKey(commandCode)) {
+			throw new IllegalArgumentException("Command handler for \"%s\" has been already registered");
+		}
 		handlers.put(commandCode, handler);
 	}
 }

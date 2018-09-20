@@ -59,4 +59,17 @@ public class CgcCliTest {
 
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void shouldThrowExceptionIfHandlerIsAlreadyRegistered() throws Exception {
+
+		// given
+		CgcCli cgcCli = new CgcCli();
+		cgcCli.registerHandler("cmd", handler);
+
+		// when
+		cgcCli.registerHandler("cmd", handler);
+
+		// then - exception is thrown
+
+	}
 }
