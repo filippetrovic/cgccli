@@ -5,7 +5,9 @@ package org.cancergenomicscloud.cli.http;
  */
 
 public interface HttpClient {
+
 	CgcResponse get(CgcRequest cgcRequest);
+	CgcResponse patch(CgcRequest request);
 
 	void shutdown() throws Exception;
 }

@@ -13,19 +13,25 @@ public class CgcRequest {
 	private final String path;
 	private final Map<String, String> headers;
 	private final Map<String, Object> queryParams;
+	private final String body;
 
 	public static CgcRequest of(String path, Map<String, String> headers) {
-		return of(path, headers, Collections.emptyMap());
+		return of(path, headers, Collections.emptyMap(), null);
 	}
 
 	public static CgcRequest of(String path, Map<String, String> headers, Map<String, Object> queryParams) {
-		return new CgcRequest(path, headers, queryParams);
+		return new CgcRequest(path, headers, queryParams, null);
 	}
 
-	private CgcRequest(String path, Map<String, String> headers, Map<String, Object> queryParams) {
+	public static CgcRequest of(String path, Map<String, String> headers, Map<String, Object> queryParams, String body) {
+		return new CgcRequest(path, headers, queryParams, body);
+	}
+
+	private CgcRequest(String path, Map<String, String> headers, Map<String, Object> queryParams, String body) {
 		this.path = path;
 		this.headers = headers;
 		this.queryParams = queryParams;
+		this.body = body;
 	}
 
 	public String getPath() {
@@ -40,6 +46,10 @@ public class CgcRequest {
 		return queryParams;
 	}
 
+	public String getBody() {
+		return body;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -47,12 +57,13 @@ public class CgcRequest {
 		CgcRequest that = (CgcRequest) o;
 		return Objects.equals(path, that.path) &&
 				Objects.equals(headers, that.headers) &&
-				Objects.equals(queryParams, that.queryParams);
+				Objects.equals(queryParams, that.queryParams) &&
+				Objects.equals(body, that.body);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(path, headers, queryParams);
+		return Objects.hash(path, headers, queryParams, body);
 	}
 
 	@Override
@@ -61,6 +72,7 @@ public class CgcRequest {
 				"path='" + path + '\'' +
 				", headers=" + headers +
 				", queryParams=" + queryParams +
+				", body='" + body + '\'' +
 				'}';
 	}
 }

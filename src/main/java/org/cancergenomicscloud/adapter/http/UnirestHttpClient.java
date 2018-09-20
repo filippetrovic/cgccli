@@ -35,6 +35,26 @@ public class UnirestHttpClient implements HttpClient {
 	}
 
 	@Override
+	public CgcResponse patch(CgcRequest cgcRequest) {
+		try {
+
+
+			final HttpResponse<String> httpResponse = Unirest.patch(cgcRequest.getPath())
+					.headers(cgcRequest.getHeaders())
+					.queryString(cgcRequest.getQueryParams())
+					.body(cgcRequest.getBody())
+					.asString();
+
+			return CgcResponse.of(httpResponse.getBody(),
+					httpResponse.getStatus(),
+					httpResponse.getStatusText());
+
+		} catch (UnirestException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public void shutdown() throws Exception {
 		Unirest.shutdown();
 	}

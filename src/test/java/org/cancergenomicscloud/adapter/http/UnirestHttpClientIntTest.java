@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Created by Filip.
@@ -74,6 +75,78 @@ public class UnirestHttpClientIntTest {
 						"\"name\":\"LP6005441-DNA_A01.annotated.nh.vcf.gz\"",
 						"\"project\":\"fpetrovic92/copy-of-simons-genome-diversity-project-sgdp\"");
 
+	}
+
+	@Test
+	public void shouldReturnFileDetails() throws Exception {
+
+		// given
+		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
+				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"));
+
+		// when
+		final CgcResponse response = httpClient.get(request);
+
+		// then
+		Assertions.assertThat(response.getStatusCode())
+				.isEqualTo(200);
+
+		Assertions.assertThat(response.getResult())
+				.isNotNull()
+				.isNotBlank()
+				.contains("\"id\":\"5ba35a05e4b0db63ded17600\"",
+						"\"name\":\"LP6005441-DNA_A01.annotated.nh.vcf.gz\"",
+						"\"size\":26721560843",
+						"\"project\":\"fpetrovic92/copy-of-simons-genome-diversity-project-sgdp");
+
+	}
+
+	@Test
+	public void shouldSetAndRemoveFileTags() throws Exception {
+
+		HashMap<String, String> headers = new HashMap<>();
+		headers.put("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c");
+		headers.put("Content-Type", "application/json");
+
+
+		// set tags
+		// given
+		CgcRequest setTagsRequest = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
+				headers,
+				Collections.emptyMap(),
+				"{\"tags\":[\"int_test1\",\"int_test2\"]}");
+
+		// when
+		final CgcResponse setTagsResponse = httpClient.patch(setTagsRequest);
+
+		// then
+		Assertions.assertThat(setTagsResponse.getStatusCode())
+				.isEqualTo(200);
+
+		Assertions.assertThat(setTagsResponse.getResult())
+				.isNotNull()
+				.isNotBlank()
+				.contains("int_test1", "int_test2");
+
+
+		// remove tags
+		// given
+		CgcRequest removeTagsRequest = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
+				headers,
+				Collections.emptyMap(),
+				"{\"tags\":[]}");
+
+		// when
+		final CgcResponse removeTagsResponse = httpClient.patch(removeTagsRequest);
+
+		// then
+		Assertions.assertThat(removeTagsResponse.getStatusCode())
+				.isEqualTo(200);
+
+		Assertions.assertThat(removeTagsResponse.getResult())
+				.isNotNull()
+				.isNotBlank()
+				.doesNotContain("int_test1", "int_test2");
 	}
 
 }
