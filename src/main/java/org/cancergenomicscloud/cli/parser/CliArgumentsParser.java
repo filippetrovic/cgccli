@@ -12,6 +12,9 @@ import java.util.stream.Stream;
 
 public class CliArgumentsParser {
 
+	private static final int COMMAND_CODE_LEN = 2;
+	public static final String COMMAND_CODE_PARTS_DELIMITER = " ";
+
 	public Command parseCommand(String[] args) {
 		return Command.of(
 				extractCommandCode(args),
@@ -20,12 +23,14 @@ public class CliArgumentsParser {
 	}
 
 	private String extractCommandCode(String[] args) {
-		return args[0];
+		return Stream.of(args)
+				.limit(COMMAND_CODE_LEN)
+				.collect(Collectors.joining(COMMAND_CODE_PARTS_DELIMITER));
 	}
 
 	private List<String> extractCommandArguments(String[] args) {
 		return Stream.of(args)
-				.skip(1)
+				.skip(COMMAND_CODE_LEN)
 				.collect(Collectors.toList());
 	}
 

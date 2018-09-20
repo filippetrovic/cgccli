@@ -34,15 +34,15 @@ public class CgcCliTest {
 	public void shouldInvokeCommandHandlerWithAppropriateArguments() throws Exception {
 		// given
 		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-				.withHandler("cmd", handler)
+				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
+		cgcCli.execute(new String[]{"first_lvl", "second_lvl", "param1", "param2"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("cmd", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", Arrays.asList("param1", "param2")));
 
 	}
 
@@ -50,11 +50,11 @@ public class CgcCliTest {
 	public void shouldThrowExceptionForIllegalCommand() throws Exception {
 		// given
 		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-				.withHandler("cmd", handler)
+				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"illegalCommand", "param1", "param2"});
+		cgcCli.execute(new String[]{"illegalCommand secondPart", "param1", "param2"});
 
 		// then - exception is thrown
 
@@ -64,17 +64,17 @@ public class CgcCliTest {
 	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
 		// given
 		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-				.withHandler("cmd", handler)
-				.withHandler("not_used_command_1", dummyHandler)
-				.withHandler("not_used_command_2", dummyHandler)
+				.withHandler("first_lvl second_lvl", handler)
+				.withHandler("not_used_command_1 second_lvl", dummyHandler)
+				.withHandler("not_used_command_2 second_lvl", dummyHandler)
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
+		cgcCli.execute(new String[]{"first_lvl", "second_lvl", "param1", "param2"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("cmd", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", Arrays.asList("param1", "param2")));
 
 	}
 }
