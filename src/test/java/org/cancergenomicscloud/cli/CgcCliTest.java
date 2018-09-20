@@ -22,6 +22,9 @@ public class CgcCliTest {
 	@Mock
 	private CliCommandHandler handler;
 
+	@Mock
+	private CliCommandHandler dummyHandler;
+
 	@Before
 	public void setUp() throws Exception {
 
@@ -71,5 +74,25 @@ public class CgcCliTest {
 
 		// then - exception is thrown
 
+	}
+
+	@Test
+	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
+		// given
+		CgcCli cgcCli = new CgcCli();
+		cgcCli.registerHandler("cmd", handler);
+		cgcCli.registerHandler("not_used_command_1", dummyHandler);
+		cgcCli.registerHandler("not_used_command_2", dummyHandler);
+
+		// when
+		cgcCli.execute(new String[]{"cmd", "param1", "param2"});
+
+		// then
+		final ArgumentCaptor<List<String>> argumentCaptor = ArgumentCaptor.forClass(List.class);
+		Mockito.verify(handler).handleCommand(argumentCaptor.capture());
+
+		Assertions.assertThat(argumentCaptor.getValue())
+				.isNotEmpty()
+				.containsExactly("param1", "param2");
 	}
 }
