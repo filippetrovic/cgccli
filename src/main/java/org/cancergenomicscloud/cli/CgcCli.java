@@ -2,6 +2,7 @@ package org.cancergenomicscloud.cli;
 
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,24 +13,24 @@ import java.util.stream.Stream;
 
 public class CgcCli {
 
-	private CliCommandHandler handler;
+	private HashMap<String, CliCommandHandler> handlers = new HashMap<>();
 
 	public void execute(String[] args) {
 
 		final String commandCode = args[0];
 
-		if ("cmd".equals(commandCode)) {
-			final List<String> params = Stream.of(args)
-					.skip(1)
-					.collect(Collectors.toList());
-
-			handler.handleCommand(params);
-		} else {
+		if (!handlers.containsKey(commandCode)) {
 			throw new IllegalArgumentException(String.format("%s is not a valid command code", commandCode));
 		}
+
+		final List<String> params = Stream.of(args)
+				.skip(1)
+				.collect(Collectors.toList());
+
+		handlers.get(commandCode).handleCommand(params);
 	}
 
-	public void registerHandler(String cmd, CliCommandHandler handler) {
-		this.handler = handler;
+	public void registerHandler(String commandCode, CliCommandHandler handler) {
+		handlers.put(commandCode, handler);
 	}
 }
