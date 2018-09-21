@@ -5,9 +5,9 @@ import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -35,8 +35,16 @@ public class ListFilesInProjectCommandHandlerTest {
 	@Mock
 	private StringOutput stringOutput;
 
-	@InjectMocks
 	private ListFilesInProjectCommandHandler handler;
+
+	@Before
+	public void setUp() throws Exception {
+		handler = new ListFilesInProjectCommandHandler(
+				httpClient,
+				responseFormatter,
+				stringOutput,
+				new QueryParameterParser());
+	}
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {

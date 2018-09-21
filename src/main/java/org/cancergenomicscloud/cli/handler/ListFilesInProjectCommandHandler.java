@@ -7,9 +7,6 @@ import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,17 +18,23 @@ public class ListFilesInProjectCommandHandler implements CliCommandHandler {
 	private HttpClient httpClient;
 	private ResponseFormatter responseFormatter;
 	private StringOutput stringOutput;
+	private QueryParameterParser queryParameterParser;
 
-	public ListFilesInProjectCommandHandler(HttpClient httpClient, ResponseFormatter responseFormatter, StringOutput stringOutput) {
+	public ListFilesInProjectCommandHandler(HttpClient httpClient,
+											ResponseFormatter responseFormatter,
+											StringOutput stringOutput,
+											QueryParameterParser queryParameterParser) {
 		this.httpClient = httpClient;
 		this.responseFormatter = responseFormatter;
 		this.stringOutput = stringOutput;
+		this.queryParameterParser = queryParameterParser;
 	}
 
+	// TODO: Remove duplication
 	@Override
 	public void handleCommand(Command command) {
 
-		final Map<String, Object> queryParams = generateQueryParams(command.getArgs());
+		final Map<String, Object> queryParams = queryParameterParser.generateQueryParams(command.getArgs());
 
 
 		final CgcRequest cgcRequest = CgcRequest.of(
@@ -43,25 +46,6 @@ public class ListFilesInProjectCommandHandler implements CliCommandHandler {
 
 		stringOutput.print(responseFormatter.format(response));
 
-	}
-
-	private Map<String, Object> generateQueryParams(List<String> args) {
-		final HashMap<String, Object> toRet = new HashMap<>();
-
-		final Iterator<String> iterator = args.iterator();
-
-		while (iterator.hasNext()) {
-
-			final String argument = iterator.next();
-
-			if (argument.startsWith("--")) {
-				final String parameterName = argument.substring("--".length());
-				final String parameterValue = iterator.next();
-				toRet.put(parameterName, parameterValue);
-			}
-		}
-
-		return toRet;
 	}
 
 }
