@@ -40,8 +40,9 @@ public class GetFileStatsCommandHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		handler = new CommandHandlerImpl(
-				"https://cgc-api.sbgenomics.com/v2/files/{file}",
-				Collections.singleton("file"),
+				new RequestBuilder(
+						"https://cgc-api.sbgenomics.com/v2/files/{file}",
+						Collections.singleton("file")),
 				httpClient::get,
 				responseFormatter,
 				stringOutput);

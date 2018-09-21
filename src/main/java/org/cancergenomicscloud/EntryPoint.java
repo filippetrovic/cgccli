@@ -7,6 +7,7 @@ import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.JsonResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
+import org.cancergenomicscloud.cli.handler.RequestBuilder;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
@@ -33,29 +34,33 @@ public class EntryPoint {
 			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(argumentsParser, keyValuesParser))
 					.withHandler("projects list",
 							new CommandHandlerImpl(
-									"https://cgc-api.sbgenomics.com/v2/projects",
-									Collections.emptySet(),
+									new RequestBuilder(
+											"https://cgc-api.sbgenomics.com/v2/projects",
+											Collections.emptySet()),
 									httpClient::get,
 									formatter,
 									output))
 					.withHandler("files list",
 							new CommandHandlerImpl(
-									"https://cgc-api.sbgenomics.com/v2/files",
-									Collections.emptySet(),
+									new RequestBuilder(
+											"https://cgc-api.sbgenomics.com/v2/files",
+											Collections.emptySet()),
 									httpClient::get,
 									formatter,
 									output))
 					.withHandler("files stat",
 							new CommandHandlerImpl(
-									"https://cgc-api.sbgenomics.com/v2/files/{file}",
-									Collections.singleton("file"),
+									new RequestBuilder(
+											"https://cgc-api.sbgenomics.com/v2/files/{file}",
+											Collections.singleton("file")),
 									httpClient::get,
 									formatter,
 									output))
 					.withHandler("files update",
 							new CommandHandlerImpl(
-									"https://cgc-api.sbgenomics.com/v2/files/{file}",
-									Collections.singleton("file"),
+									new RequestBuilder(
+											"https://cgc-api.sbgenomics.com/v2/files/{file}",
+											Collections.singleton("file")),
 									httpClient::patch,
 									formatter,
 									output))

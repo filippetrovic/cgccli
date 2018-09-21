@@ -42,8 +42,9 @@ public class ListProjectsCommandHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		handler = new CommandHandlerImpl(
-				"https://cgc-api.sbgenomics.com/v2/projects",
-				Collections.emptySet(),
+				new RequestBuilder(
+						"https://cgc-api.sbgenomics.com/v2/projects",
+						Collections.emptySet()),
 				httpClient::get,
 				responseFormatter,
 				stringOutput);
