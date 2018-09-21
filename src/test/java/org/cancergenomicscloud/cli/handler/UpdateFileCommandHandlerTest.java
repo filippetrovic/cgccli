@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import static java.util.Collections.singletonMap;
 import static org.mockito.Mockito.verify;
@@ -57,8 +58,12 @@ public class UpdateFileCommandHandlerTest {
 		handler.handleCommand(command);
 
 		// then
+		final HashMap<String, String> expectedHeaders = new HashMap<>();
+		expectedHeaders.put("X-SBG-Auth-Token", "token123");
+		expectedHeaders.put("Content-Type", "application/json");
+
 		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
-				.setHeaders(singletonMap("X-SBG-Auth-Token", "token123"))
+				.setHeaders(expectedHeaders)
 				.setPathVariables(singletonMap("file", "file#id#123"))
 				.setBody("{\"name\":\"newName\"}")
 				.createCgcRequest();

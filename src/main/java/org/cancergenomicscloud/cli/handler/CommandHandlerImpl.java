@@ -32,7 +32,8 @@ public class CommandHandlerImpl implements CliCommandHandler {
 
 	public CommandHandlerImpl(String path,
 							  Set<String> pathVariables,
-							  Function<CgcRequest, CgcResponse> sendHttpRequestFunction, ResponseFormatter responseFormatter,
+							  Function<CgcRequest, CgcResponse> sendHttpRequestFunction,
+							  ResponseFormatter responseFormatter,
 							  StringOutput stringOutput) {
 		this.path = path;
 		this.pathVariables = pathVariables;
@@ -44,12 +45,23 @@ public class CommandHandlerImpl implements CliCommandHandler {
 	@Override
 	public void handleCommand(Command command) {
 
-		final CgcRequest cgcRequest = new CgcRequestBuilder(path)
+		final CgcRequestBuilder cgcRequestBuilder = new CgcRequestBuilder(path)
 				.setHeaders(Collections.singletonMap(X_SBG_AUTH_TOKEN, command.getAuthToken()))
 				.setQueryParams(getQueryParams(command))
-				.setPathVariables(getPathVariables(command))
-				.setBody(getBody(command))
-				.createCgcRequest();
+				.setPathVariables(getPathVariables(command));
+
+		if (bodyExists(command)) {
+
+			cgcRequestBuilder.setBody(getBody(command));
+
+			Map<String, String> headers = new HashMap<>();
+			headers.put(X_SBG_AUTH_TOKEN, command.getAuthToken());
+			headers.put("Content-Type", "application/json");
+			cgcRequestBuilder.setHeaders(headers);
+
+		}
+
+		final CgcRequest cgcRequest = cgcRequestBuilder.createCgcRequest();
 
 		final CgcResponse response = sendHttpRequestFunction.apply(cgcRequest);
 
@@ -57,12 +69,11 @@ public class CommandHandlerImpl implements CliCommandHandler {
 
 	}
 
+	private boolean bodyExists(Command command) {
+		return !command.getCommandKeyValues().isEmpty();
+	}
+
 	private String getBody(Command command) {
-
-		if (command.getCommandKeyValues().isEmpty()) {
-			return null;
-		}
-
 		return new JSONObject(command.getCommandKeyValues()).toString();
 	}
 
