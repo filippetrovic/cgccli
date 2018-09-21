@@ -3,6 +3,7 @@ package org.cancergenomicscloud.adapter.http;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.HttpRequest;
 
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcResponse;
@@ -19,10 +20,13 @@ public class UnirestHttpClient implements HttpClient {
 		try {
 
 
-			final HttpResponse<String> httpResponse = Unirest.get(cgcRequest.getPath())
+			final HttpRequest httpRequest = Unirest.get(cgcRequest.getPath())
 					.headers(cgcRequest.getHeaders())
-					.queryString(cgcRequest.getQueryParams())
-					.asString();
+					.queryString(cgcRequest.getQueryParams());
+
+			cgcRequest.getPathVariables().forEach(httpRequest::routeParam);
+
+			final HttpResponse<String> httpResponse = httpRequest.asString();
 
 			return CgcResponse.of(httpResponse.getBody(),
 					httpResponse.getStatus(),

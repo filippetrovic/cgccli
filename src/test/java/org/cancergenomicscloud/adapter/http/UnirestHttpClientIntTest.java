@@ -84,8 +84,9 @@ public class UnirestHttpClientIntTest {
 	public void shouldReturnFileDetails() throws Exception {
 
 		// given
-		CgcRequest request = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+		CgcRequest request = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
 				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"))
+				.setPathVariables(Collections.singletonMap("file", "5ba35a05e4b0db63ded17600"))
 				.createCgcRequest();
 
 		// when
