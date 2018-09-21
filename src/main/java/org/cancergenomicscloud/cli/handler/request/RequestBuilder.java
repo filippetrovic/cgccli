@@ -20,7 +20,7 @@ public class RequestBuilder {
 
 	private static final String X_SBG_AUTH_TOKEN = "X-SBG-Auth-Token";
 	private static final String CONTENT_TYPE = "Content-Type";
-	public static final String APPLICATION_JSON_TYPE = "application/json";
+	private static final String APPLICATION_JSON_TYPE = "application/json";
 
 	private final String path;
 	private final Set<String> pathVariables;
