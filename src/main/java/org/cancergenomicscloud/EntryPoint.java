@@ -43,6 +43,13 @@ public class EntryPoint {
 									httpClient,
 									formatter,
 									output))
+					.withHandler("files stat",
+							new CommandHandlerImpl(
+									"https://cgc-api.sbgenomics.com/v2/files/{file}",
+									Collections.singleton("file"),
+									httpClient,
+									formatter,
+									output))
 					.get();
 
 			cgcCli.execute(args);
