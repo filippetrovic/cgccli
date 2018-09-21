@@ -1,6 +1,5 @@
-package org.cancergenomicscloud.cli.handler.request;
+package org.cancergenomicscloud.cli.handler;
 
-import org.cancergenomicscloud.cli.handler.Command;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.json.JSONObject;

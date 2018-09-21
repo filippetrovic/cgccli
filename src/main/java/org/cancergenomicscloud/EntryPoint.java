@@ -7,7 +7,7 @@ import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.JsonResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
-import org.cancergenomicscloud.cli.handler.request.RequestBuilder;
+import org.cancergenomicscloud.cli.handler.RequestBuilder;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;

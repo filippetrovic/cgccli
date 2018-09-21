@@ -1,7 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
-import org.cancergenomicscloud.cli.handler.request.RequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
