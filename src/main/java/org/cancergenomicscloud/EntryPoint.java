@@ -7,6 +7,7 @@ import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.JsonResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.ListProjectsCommandHandler;
+import org.cancergenomicscloud.cli.handler.QueryParameterParser;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
@@ -21,11 +22,12 @@ public class EntryPoint {
 		final HttpClient httpClient = new UnirestHttpClient();
 		final ResponseFormatter formatter = new JsonResponseFormatter();
 		final StringOutput output = new SystemOutStringOutput();
+		final QueryParameterParser parser = new QueryParameterParser();
 
 		try {
 
 			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-					.withHandler("projects list", new ListProjectsCommandHandler(httpClient, formatter, output))
+					.withHandler("projects list", new ListProjectsCommandHandler(httpClient, formatter, output, parser))
 					.get();
 
 			cgcCli.execute(args);
