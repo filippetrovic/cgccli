@@ -116,8 +116,9 @@ public class UnirestHttpClientIntTest {
 
 		// set tags
 		// given
-		CgcRequest setTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+		CgcRequest setTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
 				.setHeaders(headers)
+				.setPathVariables(Collections.singletonMap("file", "5ba35a05e4b0db63ded17600"))
 				.setBody("{\"tags\":[\"int_test1\",\"int_test2\"]}")
 				.createCgcRequest();
 
@@ -136,8 +137,9 @@ public class UnirestHttpClientIntTest {
 
 		// remove tags
 		// given
-		CgcRequest removeTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+		CgcRequest removeTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
 				.setHeaders(headers)
+				.setPathVariables(Collections.singletonMap("file", "5ba35a05e4b0db63ded17600"))
 				.setBody("{\"tags\":[]}")
 				.createCgcRequest();
 

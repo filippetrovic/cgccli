@@ -4,6 +4,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.HttpRequest;
+import com.mashape.unirest.request.HttpRequestWithBody;
 
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcResponse;
@@ -42,10 +43,13 @@ public class UnirestHttpClient implements HttpClient {
 	public CgcResponse patch(CgcRequest cgcRequest) {
 		try {
 
-
-			final HttpResponse<String> httpResponse = Unirest.patch(cgcRequest.getPath())
+			final HttpRequestWithBody httpRequest = Unirest.patch(cgcRequest.getPath())
 					.headers(cgcRequest.getHeaders())
-					.queryString(cgcRequest.getQueryParams())
+					.queryString(cgcRequest.getQueryParams());
+
+			cgcRequest.getPathVariables().forEach(httpRequest::routeParam);
+
+			final HttpResponse<String> httpResponse = httpRequest
 					.body(cgcRequest.getBody())
 					.asString();
 
