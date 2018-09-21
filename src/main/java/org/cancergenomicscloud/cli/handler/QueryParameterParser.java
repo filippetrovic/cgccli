@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class QueryParameterParser {
 
+	private static final String QUERY_PREFIX = "--";
+
 	public Map<String, Object> generateQueryParams(List<String> args) {
 		final HashMap<String, Object> toRet = new HashMap<>();
 
@@ -20,8 +22,8 @@ public class QueryParameterParser {
 
 			final String argument = iterator.next();
 
-			if (argument.startsWith("--")) {
-				final String parameterName = argument.substring("--".length());
+			if (argument.startsWith(QUERY_PREFIX)) {
+				final String parameterName = argument.substring(QUERY_PREFIX.length());
 				final String parameterValue = iterator.next();
 				toRet.put(parameterName, parameterValue);
 			}
