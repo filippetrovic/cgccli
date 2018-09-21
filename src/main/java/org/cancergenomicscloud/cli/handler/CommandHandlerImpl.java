@@ -63,9 +63,7 @@ public class CommandHandlerImpl implements CliCommandHandler {
 			return null;
 		}
 
-		JSONObject jsonObject = new JSONObject(command.getCommandKeyValues());
-
-		return jsonObject.toString();
+		return new JSONObject(command.getCommandKeyValues()).toString();
 	}
 
 	private Map<String, String> getQueryParams(Command command) {
