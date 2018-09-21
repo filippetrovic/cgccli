@@ -3,7 +3,6 @@ package org.cancergenomicscloud.cli.handler;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
-import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.junit.Before;
@@ -14,19 +13,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 
-import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 
 /**
  * Created by Filip.
  */
-
 @RunWith(MockitoJUnitRunner.class)
-public class ListFilesInProjectCommandHandlerTest {
+public class UpdateFileCommandHandlerTest {
 
 	@Mock
 	private HttpClient httpClient;
@@ -42,40 +36,35 @@ public class ListFilesInProjectCommandHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		handler = new CommandHandlerImpl(
-				"https://cgc-api.sbgenomics.com/v2/files",
-				Collections.emptySet(),
-				httpClient::get,
+				"https://cgc-api.sbgenomics.com/v2/files/{file}",
+				Collections.singleton("file"),
+				httpClient::patch,
 				responseFormatter,
 				stringOutput);
 	}
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {
+
 		// given
-		final Command command = Command.of("files list", "token123", singletonMap("project", "test/test"), emptyMap());
-
-		when(httpClient.get(any()))
-				.thenReturn(CgcResponse.of("result body", 200, "OK"));
-
-		when(responseFormatter.format(any()))
-				.thenReturn("result body");
+		final Command command = Command.of(
+				"files update",
+				"token123",
+				singletonMap("file", "file#id#123"),
+				singletonMap("name", "newName"));
 
 		// when
 		handler.handleCommand(command);
 
 		// then
-		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files")
+		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
 				.setHeaders(singletonMap("X-SBG-Auth-Token", "token123"))
-				.setQueryParams(singletonMap("project", "test/test"))
+				.setPathVariables(singletonMap("file", "file#id#123"))
+				.setBody("{\"name\":\"newName\"}")
 				.createCgcRequest();
 
 		verify(httpClient)
-				.get(expected);
+				.patch(expected);
 
-		verify(responseFormatter)
-				.format(CgcResponse.of("result body", 200, "OK"));
-
-		verify(stringOutput)
-				.print("result body");
 	}
 }

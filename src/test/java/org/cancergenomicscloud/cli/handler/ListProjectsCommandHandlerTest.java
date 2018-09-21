@@ -44,7 +44,7 @@ public class ListProjectsCommandHandlerTest {
 		handler = new CommandHandlerImpl(
 				"https://cgc-api.sbgenomics.com/v2/projects",
 				Collections.emptySet(),
-				httpClient,
+				httpClient::get,
 				responseFormatter,
 				stringOutput);
 	}

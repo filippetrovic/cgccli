@@ -35,21 +35,21 @@ public class EntryPoint {
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/projects",
 									Collections.emptySet(),
-									httpClient,
+									httpClient::get,
 									formatter,
 									output))
 					.withHandler("files list",
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/files",
 									Collections.emptySet(),
-									httpClient,
+									httpClient::get,
 									formatter,
 									output))
 					.withHandler("files stat",
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/files/{file}",
 									Collections.singleton("file"),
-									httpClient,
+									httpClient::get,
 									formatter,
 									output))
 					.create();

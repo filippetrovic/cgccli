@@ -42,7 +42,7 @@ public class GetFileStatsCommandHandlerTest {
 		handler = new CommandHandlerImpl(
 				"https://cgc-api.sbgenomics.com/v2/files/{file}",
 				Collections.singleton("file"),
-				httpClient,
+				httpClient::get,
 				responseFormatter,
 				stringOutput);
 	}
