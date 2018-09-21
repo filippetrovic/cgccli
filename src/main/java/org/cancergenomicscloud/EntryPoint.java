@@ -11,6 +11,7 @@ import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 import org.cancergenomicscloud.cli.parser.CommandArgumentsParser;
+import org.cancergenomicscloud.cli.parser.CommandKeyValuesParser;
 
 import java.util.Collections;
 
@@ -24,11 +25,12 @@ public class EntryPoint {
 		final HttpClient httpClient = new UnirestHttpClient();
 		final ResponseFormatter formatter = new JsonResponseFormatter();
 		final StringOutput output = new SystemOutStringOutput();
-		final CommandArgumentsParser parser = new CommandArgumentsParser();
+		final CommandArgumentsParser argumentsParser = new CommandArgumentsParser();
+		final CommandKeyValuesParser keyValuesParser = new CommandKeyValuesParser();
 
 		try {
 
-			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(parser))
+			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(argumentsParser, keyValuesParser))
 					.withHandler("projects list",
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/projects",

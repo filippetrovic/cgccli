@@ -11,8 +11,6 @@ import java.util.Map;
 
 public class CommandArgumentsParser {
 
-	private static final String QUERY_PREFIX = "--";
-
 	public Map<String, String> parse(List<String> args) {
 		final HashMap<String, String> toRet = new HashMap<>();
 
@@ -22,8 +20,8 @@ public class CommandArgumentsParser {
 
 			final String argument = iterator.next();
 
-			if (argument.startsWith(QUERY_PREFIX)) {
-				final String parameterName = argument.substring(QUERY_PREFIX.length());
+			if (argument.startsWith(CliArgumentsParser.QUERY_PREFIX)) {
+				final String parameterName = argument.substring(CliArgumentsParser.QUERY_PREFIX.length());
 				final String parameterValue = iterator.next();
 				toRet.put(parameterName, parameterValue);
 			}

@@ -14,6 +14,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -49,7 +51,7 @@ public class GetFileStatsCommandHandlerTest {
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {
 
 		// given
-		final Command command = Command.of("files stat", "token123", Collections.singletonMap("file", "file#id#123"));
+		final Command command = Command.of("files stat", "token123", singletonMap("file", "file#id#123"), emptyMap());
 
 		when(httpClient.get(any()))
 				.thenReturn(CgcResponse.of("This is file stats response", 200, "OK"));
@@ -62,8 +64,8 @@ public class GetFileStatsCommandHandlerTest {
 
 		// then
 		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
-				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "token123"))
-				.setPathVariables(Collections.singletonMap("file", "file#id#123"))
+				.setHeaders(singletonMap("X-SBG-Auth-Token", "token123"))
+				.setPathVariables(singletonMap("file", "file#id#123"))
 				.createCgcRequest();
 
 		verify(httpClient)
