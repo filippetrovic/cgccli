@@ -2,6 +2,7 @@ package org.cancergenomicscloud.adapter.http;
 
 import org.assertj.core.api.Assertions;
 import org.cancergenomicscloud.cli.http.CgcRequest;
+import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.junit.AfterClass;
@@ -27,8 +28,9 @@ public class UnirestHttpClientIntTest {
 	public void shouldReturnAllProjects() throws Exception {
 
 		// given
-		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/projects",
-				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"));
+		CgcRequest request = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/projects")
+				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"))
+				.createCgcRequest();
 
 		// when
 		final CgcResponse response = httpClient.get(request);
@@ -56,9 +58,10 @@ public class UnirestHttpClientIntTest {
 	public void shouldReturnAllFileForProject() throws Exception {
 
 		// given
-		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files",
-				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"),
-				Collections.singletonMap("project", "fpetrovic92/copy-of-simons-genome-diversity-project-sgdp"));
+		CgcRequest request = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files")
+				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"))
+				.setQueryParams(Collections.singletonMap("project", "fpetrovic92/copy-of-simons-genome-diversity-project-sgdp"))
+				.createCgcRequest();
 
 		// when
 		final CgcResponse response = httpClient.get(request);
@@ -81,8 +84,9 @@ public class UnirestHttpClientIntTest {
 	public void shouldReturnFileDetails() throws Exception {
 
 		// given
-		CgcRequest request = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
-				Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"));
+		CgcRequest request = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "edac56a0da534863ad63d71edfde207c"))
+				.createCgcRequest();
 
 		// when
 		final CgcResponse response = httpClient.get(request);
@@ -111,10 +115,10 @@ public class UnirestHttpClientIntTest {
 
 		// set tags
 		// given
-		CgcRequest setTagsRequest = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
-				headers,
-				Collections.emptyMap(),
-				"{\"tags\":[\"int_test1\",\"int_test2\"]}");
+		CgcRequest setTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+				.setHeaders(headers)
+				.setBody("{\"tags\":[\"int_test1\",\"int_test2\"]}")
+				.createCgcRequest();
 
 		// when
 		final CgcResponse setTagsResponse = httpClient.patch(setTagsRequest);
@@ -131,10 +135,10 @@ public class UnirestHttpClientIntTest {
 
 		// remove tags
 		// given
-		CgcRequest removeTagsRequest = CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600",
-				headers,
-				Collections.emptyMap(),
-				"{\"tags\":[]}");
+		CgcRequest removeTagsRequest = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/5ba35a05e4b0db63ded17600")
+				.setHeaders(headers)
+				.setBody("{\"tags\":[]}")
+				.createCgcRequest();
 
 		// when
 		final CgcResponse removeTagsResponse = httpClient.patch(removeTagsRequest);

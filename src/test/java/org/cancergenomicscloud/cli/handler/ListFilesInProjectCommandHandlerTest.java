@@ -2,6 +2,7 @@ package org.cancergenomicscloud.cli.handler;
 
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.http.CgcRequest;
+import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
@@ -61,10 +62,13 @@ public class ListFilesInProjectCommandHandlerTest {
 		handler.handleCommand(command);
 
 		// then
+		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files")
+				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "token123"))
+				.setQueryParams(Collections.singletonMap("project", "test/test"))
+				.createCgcRequest();
+
 		verify(httpClient)
-				.get(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files",
-						Collections.singletonMap("X-SBG-Auth-Token", "token123"),
-						Collections.singletonMap("project", "test/test")));
+				.get(expected);
 
 		verify(responseFormatter)
 				.format(CgcResponse.of("result body", 200, "OK"));

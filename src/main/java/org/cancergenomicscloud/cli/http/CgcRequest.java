@@ -1,7 +1,5 @@
 package org.cancergenomicscloud.cli.http;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,24 +15,7 @@ public class CgcRequest {
 	private final Map<String, String> pathVariables;
 	private final String body;
 
-	public static CgcRequest of(String path, Map<String, String> headers) {
-		return of(path, headers, Collections.emptyMap(), null);
-	}
-
-	public static CgcRequest of(String path, Map<String, String> headers, Map<String, String> queryParams) {
-		return new CgcRequest(path, headers, new HashMap<>(queryParams), Collections.emptyMap(), null);
-	}
-
-	public static CgcRequest of(String path, Map<String, String> headers, Map<String, Object> queryParams, String body) {
-		return new CgcRequest(path, headers, queryParams, Collections.emptyMap(), body);
-	}
-
-	public static CgcRequest of(
-			String path, Map<String, String> headers, Map<String, String> queryParams, Map<String, String> pathVariables, String body) {
-		return new CgcRequest(path, headers, new HashMap<>(queryParams), pathVariables, body);
-	}
-
-	private CgcRequest(String path, Map<String, String> headers, Map<String, Object> queryParams, Map<String, String> pathVariables, String body) {
+	CgcRequest(String path, Map<String, String> headers, Map<String, Object> queryParams, Map<String, String> pathVariables, String body) {
 		this.path = path;
 		this.headers = headers;
 		this.queryParams = queryParams;

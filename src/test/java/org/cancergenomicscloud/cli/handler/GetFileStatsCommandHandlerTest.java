@@ -2,6 +2,7 @@ package org.cancergenomicscloud.cli.handler;
 
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.http.CgcRequest;
+import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
@@ -60,12 +61,13 @@ public class GetFileStatsCommandHandlerTest {
 		handler.handleCommand(command);
 
 		// then
+		final CgcRequest expected = new CgcRequestBuilder("https://cgc-api.sbgenomics.com/v2/files/{file}")
+				.setHeaders(Collections.singletonMap("X-SBG-Auth-Token", "token123"))
+				.setPathVariables(Collections.singletonMap("file", "file#id#123"))
+				.createCgcRequest();
+
 		verify(httpClient)
-				.get(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/{file}",
-						Collections.singletonMap("X-SBG-Auth-Token", "token123"),
-						Collections.emptyMap(),
-						Collections.singletonMap("file", "file#id#123"),
-						null));
+				.get(expected);
 
 		verify(responseFormatter)
 				.format(CgcResponse.of("This is file stats response", 200, "OK"));

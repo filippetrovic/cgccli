@@ -2,6 +2,7 @@ package org.cancergenomicscloud.cli.handler;
 
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.http.CgcRequest;
+import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
@@ -44,12 +45,11 @@ public class CommandHandlerImpl implements CliCommandHandler {
 	@Override
 	public void handleCommand(Command command) {
 
-		final CgcRequest cgcRequest = CgcRequest.of(
-				path,
-				Collections.singletonMap(X_SBG_AUTH_TOKEN, command.getAuthToken()),
-				getQueryParams(command),
-				getPathVariables(command),
-				null);
+		final CgcRequest cgcRequest = new CgcRequestBuilder(path)
+				.setHeaders(Collections.singletonMap(X_SBG_AUTH_TOKEN, command.getAuthToken()))
+				.setQueryParams(getQueryParams(command))
+				.setPathVariables(getPathVariables(command))
+				.createCgcRequest();
 
 		final CgcResponse response = httpClient.get(cgcRequest);
 
