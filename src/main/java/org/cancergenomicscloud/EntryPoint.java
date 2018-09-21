@@ -27,7 +27,20 @@ public class EntryPoint {
 		try {
 
 			final CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
-					.withHandler("projects list", new CommandHandlerImpl("https://cgc-api.sbgenomics.com/v2/projects", httpClient, formatter, output, parser))
+					.withHandler("projects list",
+							new CommandHandlerImpl(
+									"https://cgc-api.sbgenomics.com/v2/projects",
+									httpClient,
+									formatter,
+									output,
+									parser))
+					.withHandler("files list",
+							new CommandHandlerImpl(
+									"https://cgc-api.sbgenomics.com/v2/files",
+									httpClient,
+									formatter,
+									output,
+									parser))
 					.get();
 
 			cgcCli.execute(args);
