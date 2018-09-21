@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 public class RequestBuilder {
 
 	private static final String X_SBG_AUTH_TOKEN = "X-SBG-Auth-Token";
+	private static final String CONTENT_TYPE = "Content-Type";
+	public static final String APPLICATION_JSON_TYPE = "application/json";
 
 	private final String path;
 	private final Set<String> pathVariables;
@@ -39,7 +41,7 @@ public class RequestBuilder {
 
 			Map<String, String> headers = new HashMap<>();
 			headers.put(X_SBG_AUTH_TOKEN, command.getAuthToken());
-			headers.put("Content-Type", "application/json");
+			headers.put(CONTENT_TYPE, APPLICATION_JSON_TYPE);
 			cgcRequestBuilder.setHeaders(headers);
 
 		}
