@@ -1,6 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -11,28 +11,28 @@ public class Command {
 
 	private final String commandCode;
 	private final String authToken;
-	private final List<String> args;
+	private final Map<String, String> commandArguments;
 
-	public static Command of(String commandCode, String authToken, List<String> args) {
-		return new Command(commandCode, authToken, args);
+	public static Command of(String commandCode, String authToken, Map<String, String> commandArguments) {
+		return new Command(commandCode, authToken, commandArguments);
 	}
 
-	private Command(String commandCode, String authToken, List<String> args) {
+	private Command(String commandCode, String authToken, Map<String, String> commandArguments) {
 		this.commandCode = commandCode;
 		this.authToken = authToken;
-		this.args = args;
+		this.commandArguments = commandArguments;
 	}
 
 	public String getCommandCode() {
 		return commandCode;
 	}
 
-	public List<String> getArgs() {
-		return args;
-	}
-
 	public String getAuthToken() {
 		return authToken;
+	}
+
+	public Map<String, String> getCommandArguments() {
+		return commandArguments;
 	}
 
 	@Override
@@ -42,12 +42,12 @@ public class Command {
 		Command command = (Command) o;
 		return Objects.equals(commandCode, command.commandCode) &&
 				Objects.equals(authToken, command.authToken) &&
-				Objects.equals(args, command.args);
+				Objects.equals(commandArguments, command.commandArguments);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(commandCode, authToken, args);
+		return Objects.hash(commandCode, authToken, commandArguments);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class Command {
 		return "Command{" +
 				"commandCode='" + commandCode + '\'' +
 				", authToken='" + authToken + '\'' +
-				", args=" + args +
+				", commandArguments=" + commandArguments +
 				'}';
 	}
 }

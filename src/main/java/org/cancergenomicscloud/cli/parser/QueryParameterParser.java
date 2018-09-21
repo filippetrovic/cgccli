@@ -1,4 +1,4 @@
-package org.cancergenomicscloud.cli.handler;
+package org.cancergenomicscloud.cli.parser;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,8 +13,8 @@ public class QueryParameterParser {
 
 	private static final String QUERY_PREFIX = "--";
 
-	public Map<String, Object> generateQueryParams(List<String> args) {
-		final HashMap<String, Object> toRet = new HashMap<>();
+	public Map<String, String> parse(List<String> args) {
+		final HashMap<String, String> toRet = new HashMap<>();
 
 		final Iterator<String> iterator = args.iterator();
 

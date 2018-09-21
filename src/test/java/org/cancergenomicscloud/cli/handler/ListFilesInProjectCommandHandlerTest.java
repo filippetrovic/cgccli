@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -43,14 +42,13 @@ public class ListFilesInProjectCommandHandlerTest {
 				"https://cgc-api.sbgenomics.com/v2/files",
 				httpClient,
 				responseFormatter,
-				stringOutput,
-				new QueryParameterParser());
+				stringOutput);
 	}
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {
 		// given
-		final Command command = Command.of("files list", "token123", Arrays.asList("--project", "test/test"));
+		final Command command = Command.of("files list", "token123", Collections.singletonMap("project", "test/test"));
 
 		when(httpClient.get(any()))
 				.thenReturn(CgcResponse.of("result body", 200, "OK"));

@@ -1,6 +1,7 @@
 package org.cancergenomicscloud.cli.http;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,8 +20,8 @@ public class CgcRequest {
 		return of(path, headers, Collections.emptyMap(), null);
 	}
 
-	public static CgcRequest of(String path, Map<String, String> headers, Map<String, Object> queryParams) {
-		return new CgcRequest(path, headers, queryParams, null);
+	public static CgcRequest of(String path, Map<String, String> headers, Map<String, String> queryParams) {
+		return new CgcRequest(path, headers, new HashMap<>(queryParams), null);
 	}
 
 	public static CgcRequest of(String path, Map<String, String> headers, Map<String, Object> queryParams, String body) {

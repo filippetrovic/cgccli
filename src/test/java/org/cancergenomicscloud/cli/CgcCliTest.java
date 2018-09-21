@@ -3,14 +3,14 @@ package org.cancergenomicscloud.cli;
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
 import org.cancergenomicscloud.cli.handler.Command;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
-import org.junit.Before;
+import org.cancergenomicscloud.cli.parser.QueryParameterParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Filip.
@@ -25,31 +25,26 @@ public class CgcCliTest {
 	@Mock
 	private CliCommandHandler dummyHandler;
 
-	@Before
-	public void setUp() throws Exception {
-
-	}
-
 	@Test
 	public void shouldInvokeCommandHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "param1", "param2"});
+		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "--paramName", "paramVal"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("first_lvl second_lvl", "token123", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", "token123", Collections.singletonMap("paramName", "paramVal")));
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionForIllegalCommand() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
@@ -63,18 +58,18 @@ public class CgcCliTest {
 	@Test
 	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser())
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.withHandler("not_used_command_1 second_lvl", dummyHandler)
 				.withHandler("not_used_command_2 second_lvl", dummyHandler)
 				.get();
 
 		// when
-		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "param1", "param2"});
+		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "--paramName", "paramVal"});
 
 		// then
 		Mockito.verify(handler)
-				.handleCommand(Command.of("first_lvl second_lvl", "token123", Arrays.asList("param1", "param2")));
+				.handleCommand(Command.of("first_lvl second_lvl", "token123", Collections.singletonMap("paramName", "paramVal")));
 
 	}
 }

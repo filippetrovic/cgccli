@@ -42,14 +42,13 @@ public class ListProjectsCommandHandlerTest {
 				"https://cgc-api.sbgenomics.com/v2/projects",
 				httpClient,
 				responseFormatter,
-				stringOutput,
-				new QueryParameterParser());
+				stringOutput);
 	}
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {
 		// given
-		final Command command = Command.of("projects list", "token123", Collections.emptyList());
+		final Command command = Command.of("projects list", "token123", Collections.emptyMap());
 
 		when(httpClient.get(any()))
 				.thenReturn(CgcResponse.of("result body", 200, "OK"));

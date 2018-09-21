@@ -1,4 +1,4 @@
-package org.cancergenomicscloud.cli.handler;
+package org.cancergenomicscloud.cli.parser;
 
 import org.junit.Test;
 
@@ -24,7 +24,7 @@ public class QueryParameterParserTest {
 		List<String> cliArgs = Arrays.asList("--testParam", "testValue");
 
 		// when
-		Map<String, Object> queryParams = parser.generateQueryParams(cliArgs);
+		Map<String, String> queryParams = parser.parse(cliArgs);
 
 		// then
 		assertThat(queryParams)
@@ -37,7 +37,7 @@ public class QueryParameterParserTest {
 		List<String> cliArgs = Arrays.asList("--testParam", "testValue", "--testParam2", "testParamValue", "--param3", "paramValue3");
 
 		// when
-		Map<String, Object> queryParams = parser.generateQueryParams(cliArgs);
+		Map<String, String> queryParams = parser.parse(cliArgs);
 
 		// then
 		assertThat(queryParams)
@@ -53,7 +53,7 @@ public class QueryParameterParserTest {
 		List<String> cliArgs = Collections.emptyList();
 
 		// when
-		Map<String, Object> queryParams = parser.generateQueryParams(cliArgs);
+		Map<String, String> queryParams = parser.parse(cliArgs);
 
 		// then
 		assertThat(queryParams).isEmpty();
@@ -65,7 +65,7 @@ public class QueryParameterParserTest {
 		List<String> cliArgs = Arrays.asList("--testParam", "testValue", "--testParam2", "testParamValue", "blah-=blah2", "asd=asf");
 
 		// when
-		Map<String, Object> queryParams = parser.generateQueryParams(cliArgs);
+		Map<String, String> queryParams = parser.parse(cliArgs);
 
 		// then
 		assertThat(queryParams)
