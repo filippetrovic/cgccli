@@ -18,10 +18,10 @@ public class CliArgumentsParser {
 	private static final String COMMAND_CODE_PARTS_DELIMITER = " ";
 	private static final int TOKEN_INDEX = 1;
 
-	private QueryParameterParser commandArgumentParser;
+	private CommandArgumentsParser commandArgumentsParser;
 
-	public CliArgumentsParser(QueryParameterParser commandArgumentParser) {
-		this.commandArgumentParser = commandArgumentParser;
+	public CliArgumentsParser(CommandArgumentsParser commandArgumentsParser) {
+		this.commandArgumentsParser = commandArgumentsParser;
 	}
 
 	public Command parseCommand(String[] cliInputArgs) {
@@ -29,7 +29,7 @@ public class CliArgumentsParser {
 			return Command.of(
 					extractCommandCode(cliInputArgs),
 					extractToken(cliInputArgs),
-					extractCommandArguments(cliInputArgs));
+					extractCommandArguments(getArgumentsPart(cliInputArgs)));
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Failed to parse arguments.");
 		}
@@ -46,13 +46,14 @@ public class CliArgumentsParser {
 				.collect(Collectors.joining(COMMAND_CODE_PARTS_DELIMITER));
 	}
 
-	private Map<String, String> extractCommandArguments(String[] cliInputArgs) {
-		final List<String> arguments = Stream.of(cliInputArgs)
-				.skip(COMMAND_CODE_LEN + TOKEN_PART_LEN)
-				.collect(Collectors.toList());
-
-		return commandArgumentParser.parse(arguments);
+	private List<String> getArgumentsPart(String[] cliInputArgs) {
+		return Stream.of(cliInputArgs)
+					.skip(COMMAND_CODE_LEN + TOKEN_PART_LEN)
+					.collect(Collectors.toList());
 	}
 
+	private Map<String, String> extractCommandArguments(List<String> argumentsPart) {
+		return commandArgumentsParser.parse(argumentsPart);
+	}
 
 }

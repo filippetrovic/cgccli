@@ -3,7 +3,7 @@ package org.cancergenomicscloud.cli;
 import org.cancergenomicscloud.cli.handler.CliCommandHandler;
 import org.cancergenomicscloud.cli.handler.Command;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
-import org.cancergenomicscloud.cli.parser.QueryParameterParser;
+import org.cancergenomicscloud.cli.parser.CommandArgumentsParser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ public class CgcCliTest {
 	@Test
 	public void shouldInvokeCommandHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
@@ -44,7 +44,7 @@ public class CgcCliTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionForIllegalCommand() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.get();
 
@@ -58,7 +58,7 @@ public class CgcCliTest {
 	@Test
 	public void shouldExecuteRightHandlerWithAppropriateArguments() throws Exception {
 		// given
-		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new QueryParameterParser()))
+		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("first_lvl second_lvl", handler)
 				.withHandler("not_used_command_1 second_lvl", dummyHandler)
 				.withHandler("not_used_command_2 second_lvl", dummyHandler)

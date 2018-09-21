@@ -10,7 +10,7 @@ import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
-import org.cancergenomicscloud.cli.parser.QueryParameterParser;
+import org.cancergenomicscloud.cli.parser.CommandArgumentsParser;
 
 /**
  * Created by Filip.
@@ -22,7 +22,7 @@ public class EntryPoint {
 		final HttpClient httpClient = new UnirestHttpClient();
 		final ResponseFormatter formatter = new JsonResponseFormatter();
 		final StringOutput output = new SystemOutStringOutput();
-		final QueryParameterParser parser = new QueryParameterParser();
+		final CommandArgumentsParser parser = new CommandArgumentsParser();
 
 		try {
 

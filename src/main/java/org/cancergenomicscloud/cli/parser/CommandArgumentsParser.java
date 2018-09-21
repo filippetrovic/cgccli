@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by Filip.
  */
 
-public class QueryParameterParser {
+public class CommandArgumentsParser {
 
 	private static final String QUERY_PREFIX = "--";
 

@@ -44,7 +44,7 @@ public class CliArgumentsParserTest {
 		});
 	}
 
-	private CliArgumentsParser cliArgumentsParser = new CliArgumentsParser(new QueryParameterParser());
+	private CliArgumentsParser cliArgumentsParser = new CliArgumentsParser(new CommandArgumentsParser());
 
 	private String[] cliInputArgs;
 	private Command expectedCommand;

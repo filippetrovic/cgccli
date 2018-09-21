@@ -14,9 +14,9 @@ import static org.assertj.core.api.Assertions.entry;
  * Created by Filip.
  */
 
-public class QueryParameterParserTest {
+public class CommandArgumentsParserTest {
 
-	private QueryParameterParser parser = new QueryParameterParser();
+	private CommandArgumentsParser parser = new CommandArgumentsParser();
 
 	@Test
 	public void shouldParseOneQueryParameter() throws Exception {
