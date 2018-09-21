@@ -50,7 +50,7 @@ public class EntryPoint {
 									httpClient,
 									formatter,
 									output))
-					.get();
+					.create();
 
 			cgcCli.execute(args);
 

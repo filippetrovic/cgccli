@@ -32,8 +32,7 @@ public class CgcCliBuilderTest {
 
 		new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("cmd", handler)
-				.withHandler("cmd", dummyHandler)
-				.get();
+				.withHandler("cmd", dummyHandler);
 
 	}
 

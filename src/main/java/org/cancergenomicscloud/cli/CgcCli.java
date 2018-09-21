@@ -12,13 +12,13 @@ import java.util.HashMap;
 
 public class CgcCli {
 
-	private CliArgumentsParser cliArgumentsParser;
+	private final CliArgumentsParser cliArgumentsParser;
 
-	private HashMap<String, CliCommandHandler> handlers;
+	private final HashMap<String, CliCommandHandler> handlers;
 
-	CgcCli(CliArgumentsParser cliArgumentsParser) {
+	CgcCli(CliArgumentsParser cliArgumentsParser, HashMap<String, CliCommandHandler> handlers) {
 		this.cliArgumentsParser = cliArgumentsParser;
-		this.handlers = new HashMap<>();
+		this.handlers = handlers;
 	}
 
 	public void execute(String[] cliInputArgs) {
@@ -33,10 +33,4 @@ public class CgcCli {
 				.handleCommand(command);
 	}
 
-	public void registerHandler(String commandCode, CliCommandHandler handler) {
-		if (handlers.containsKey(commandCode)) {
-			throw new IllegalArgumentException("Command handler for \"%s\" has been already registered");
-		}
-		handlers.put(commandCode, handler);
-	}
 }

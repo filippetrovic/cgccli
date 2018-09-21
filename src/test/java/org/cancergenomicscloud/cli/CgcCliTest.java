@@ -30,7 +30,7 @@ public class CgcCliTest {
 		// given
 		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("first_lvl second_lvl", handler)
-				.get();
+				.create();
 
 		// when
 		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "--paramName", "paramVal"});
@@ -46,7 +46,7 @@ public class CgcCliTest {
 		// given
 		CgcCli cgcCli = new CgcCliBuilder(new CliArgumentsParser(new CommandArgumentsParser()))
 				.withHandler("first_lvl second_lvl", handler)
-				.get();
+				.create();
 
 		// when
 		cgcCli.execute(new String[]{"--token", "token123", "illegalCommand secondPart", "param1", "param2"});
@@ -62,7 +62,7 @@ public class CgcCliTest {
 				.withHandler("first_lvl second_lvl", handler)
 				.withHandler("not_used_command_1 second_lvl", dummyHandler)
 				.withHandler("not_used_command_2 second_lvl", dummyHandler)
-				.get();
+				.create();
 
 		// when
 		cgcCli.execute(new String[]{"--token", "token123", "first_lvl", "second_lvl", "--paramName", "paramVal"});
