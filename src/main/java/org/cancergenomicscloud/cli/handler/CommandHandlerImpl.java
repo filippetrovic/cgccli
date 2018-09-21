@@ -13,32 +13,33 @@ import java.util.Map;
  * Created by Filip.
  */
 
-public class ListFilesInProjectCommandHandler implements CliCommandHandler {
+public class CommandHandlerImpl implements CliCommandHandler {
 
+	private final String path;
 	private HttpClient httpClient;
 	private ResponseFormatter responseFormatter;
 	private StringOutput stringOutput;
 	private QueryParameterParser queryParameterParser;
 
-	public ListFilesInProjectCommandHandler(HttpClient httpClient,
-											ResponseFormatter responseFormatter,
-											StringOutput stringOutput,
-											QueryParameterParser queryParameterParser) {
+	public CommandHandlerImpl(String path,
+							  HttpClient httpClient,
+							  ResponseFormatter responseFormatter,
+							  StringOutput stringOutput,
+							  QueryParameterParser queryParameterParser) {
 		this.httpClient = httpClient;
 		this.responseFormatter = responseFormatter;
 		this.stringOutput = stringOutput;
 		this.queryParameterParser = queryParameterParser;
+		this.path = path;
 	}
 
-	// TODO: Remove duplication
 	@Override
 	public void handleCommand(Command command) {
 
 		final Map<String, Object> queryParams = queryParameterParser.generateQueryParams(command.getArgs());
 
-
 		final CgcRequest cgcRequest = CgcRequest.of(
-				"https://cgc-api.sbgenomics.com/v2/files",
+				path,
 				Collections.singletonMap("X-SBG-Auth-Token", command.getAuthToken()),
 				queryParams);
 

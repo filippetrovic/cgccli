@@ -34,11 +34,12 @@ public class ListProjectsCommandHandlerTest {
 	@Mock
 	private StringOutput stringOutput;
 
-	private ListProjectsCommandHandler handler;
+	private CommandHandlerImpl handler;
 
 	@Before
 	public void setUp() throws Exception {
-		handler = new ListProjectsCommandHandler(
+		handler = new CommandHandlerImpl(
+				"https://cgc-api.sbgenomics.com/v2/projects",
 				httpClient,
 				responseFormatter,
 				stringOutput,

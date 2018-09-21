@@ -35,11 +35,12 @@ public class ListFilesInProjectCommandHandlerTest {
 	@Mock
 	private StringOutput stringOutput;
 
-	private ListFilesInProjectCommandHandler handler;
+	private CommandHandlerImpl handler;
 
 	@Before
 	public void setUp() throws Exception {
-		handler = new ListFilesInProjectCommandHandler(
+		handler = new CommandHandlerImpl(
+				"https://cgc-api.sbgenomics.com/v2/files",
 				httpClient,
 				responseFormatter,
 				stringOutput,
