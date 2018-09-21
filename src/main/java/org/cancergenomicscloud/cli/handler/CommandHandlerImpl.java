@@ -16,10 +16,10 @@ import java.util.Map;
 public class CommandHandlerImpl implements CliCommandHandler {
 
 	private final String path;
-	private HttpClient httpClient;
-	private ResponseFormatter responseFormatter;
-	private StringOutput stringOutput;
-	private QueryParameterParser queryParameterParser;
+	private final HttpClient httpClient;
+	private final ResponseFormatter responseFormatter;
+	private final StringOutput stringOutput;
+	private final QueryParameterParser queryParameterParser;
 
 	public CommandHandlerImpl(String path,
 							  HttpClient httpClient,
