@@ -52,6 +52,13 @@ public class EntryPoint {
 									httpClient::get,
 									formatter,
 									output))
+					.withHandler("files update",
+							new CommandHandlerImpl(
+									"https://cgc-api.sbgenomics.com/v2/files/{file}",
+									Collections.singleton("file"),
+									httpClient::patch,
+									formatter,
+									output))
 					.create();
 
 			cgcCli.execute(args);
