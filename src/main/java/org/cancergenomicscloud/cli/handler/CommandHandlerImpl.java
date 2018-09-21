@@ -15,6 +15,8 @@ import java.util.Map;
 
 public class CommandHandlerImpl implements CliCommandHandler {
 
+	private static final String X_SBG_AUTH_TOKEN = "X-SBG-Auth-Token";
+
 	private final String path;
 	private final HttpClient httpClient;
 	private final ResponseFormatter responseFormatter;
@@ -40,7 +42,7 @@ public class CommandHandlerImpl implements CliCommandHandler {
 
 		final CgcRequest cgcRequest = CgcRequest.of(
 				path,
-				Collections.singletonMap("X-SBG-Auth-Token", command.getAuthToken()),
+				Collections.singletonMap(X_SBG_AUTH_TOKEN, command.getAuthToken()),
 				queryParams);
 
 		final CgcResponse response = httpClient.get(cgcRequest);
