@@ -40,6 +40,7 @@ public class ListProjectsCommandHandlerTest {
 	public void setUp() throws Exception {
 		handler = new CommandHandlerImpl(
 				"https://cgc-api.sbgenomics.com/v2/projects",
+				Collections.emptySet(),
 				httpClient,
 				responseFormatter,
 				stringOutput);

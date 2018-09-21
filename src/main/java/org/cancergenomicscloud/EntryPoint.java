@@ -12,6 +12,8 @@ import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
 import org.cancergenomicscloud.cli.parser.CommandArgumentsParser;
 
+import java.util.Collections;
+
 /**
  * Created by Filip.
  */
@@ -30,12 +32,14 @@ public class EntryPoint {
 					.withHandler("projects list",
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/projects",
+									Collections.emptySet(),
 									httpClient,
 									formatter,
 									output))
 					.withHandler("files list",
 							new CommandHandlerImpl(
 									"https://cgc-api.sbgenomics.com/v2/files",
+									Collections.emptySet(),
 									httpClient,
 									formatter,
 									output))

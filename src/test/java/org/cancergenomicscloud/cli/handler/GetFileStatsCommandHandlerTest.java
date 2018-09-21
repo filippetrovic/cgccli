@@ -17,13 +17,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 /**
  * Created by Filip.
  */
-
 @RunWith(MockitoJUnitRunner.class)
-public class ListFilesInProjectCommandHandlerTest {
+public class GetFileStatsCommandHandlerTest {
 
 	@Mock
 	private HttpClient httpClient;
@@ -39,8 +37,8 @@ public class ListFilesInProjectCommandHandlerTest {
 	@Before
 	public void setUp() throws Exception {
 		handler = new CommandHandlerImpl(
-				"https://cgc-api.sbgenomics.com/v2/files",
-				Collections.emptySet(),
+				"https://cgc-api.sbgenomics.com/v2/files/{file}",
+				Collections.singleton("file"),
 				httpClient,
 				responseFormatter,
 				stringOutput);
@@ -48,28 +46,32 @@ public class ListFilesInProjectCommandHandlerTest {
 
 	@Test
 	public void shouldInvokeHttpClientWithValidRequest() throws Exception {
+
 		// given
-		final Command command = Command.of("files list", "token123", Collections.singletonMap("project", "test/test"));
+		final Command command = Command.of("files stat", "token123", Collections.singletonMap("file", "file#id#123"));
 
 		when(httpClient.get(any()))
-				.thenReturn(CgcResponse.of("result body", 200, "OK"));
+				.thenReturn(CgcResponse.of("This is file stats response", 200, "OK"));
 
 		when(responseFormatter.format(any()))
-				.thenReturn("result body");
+				.thenReturn("This is file stats response");
 
 		// when
 		handler.handleCommand(command);
 
 		// then
 		verify(httpClient)
-				.get(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files",
+				.get(CgcRequest.of("https://cgc-api.sbgenomics.com/v2/files/{file}",
 						Collections.singletonMap("X-SBG-Auth-Token", "token123"),
-						Collections.singletonMap("project", "test/test")));
+						Collections.emptyMap(),
+						Collections.singletonMap("file", "file#id#123"),
+						null));
 
 		verify(responseFormatter)
-				.format(CgcResponse.of("result body", 200, "OK"));
+				.format(CgcResponse.of("This is file stats response", 200, "OK"));
 
 		verify(stringOutput)
-				.print("result body");
+				.print("This is file stats response");
+
 	}
 }
