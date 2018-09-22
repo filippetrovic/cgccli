@@ -1,5 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
+import org.cancergenomicscloud.cli.handler.parser.KeyValueToJsonParser;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 

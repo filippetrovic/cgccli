@@ -1,4 +1,4 @@
-package org.cancergenomicscloud.cli.handler;
+package org.cancergenomicscloud.cli.handler.parser;
 
 import org.json.JSONObject;
 
