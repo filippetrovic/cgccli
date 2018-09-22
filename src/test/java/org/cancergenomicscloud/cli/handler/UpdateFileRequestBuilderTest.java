@@ -1,48 +1,28 @@
 package org.cancergenomicscloud.cli.handler;
 
-import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
-import org.cancergenomicscloud.cli.http.HttpClient;
-import org.cancergenomicscloud.cli.output.StringOutput;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.HashMap;
 
 import static java.util.Collections.singletonMap;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Created by Filip.
  */
-@RunWith(MockitoJUnitRunner.class)
-public class UpdateFileCommandHandlerTest {
+public class UpdateFileRequestBuilderTest {
 
-	@Mock
-	private HttpClient httpClient;
-
-	@Mock
-	private ResponseFormatter responseFormatter;
-
-	@Mock
-	private StringOutput stringOutput;
-
-	private CommandHandlerImpl handler;
+	private RequestBuilder requestBuilder;
 
 	@Before
 	public void setUp() throws Exception {
-		handler = new CommandHandlerImpl(
-				new RequestBuilder(
-						"https://cgc-api.sbgenomics.com/v2/files/{file}",
-						Collections.singleton("file")),
-				httpClient::patch,
-				responseFormatter,
-				stringOutput);
+		requestBuilder = new RequestBuilder(
+				"https://cgc-api.sbgenomics.com/v2/files/{file}",
+				Collections.singleton("file"));
 	}
 
 	@Test
@@ -56,7 +36,7 @@ public class UpdateFileCommandHandlerTest {
 				singletonMap("name", "newName"));
 
 		// when
-		handler.handleCommand(command);
+		final CgcRequest result = requestBuilder.buildRequest(command);
 
 		// then
 		final HashMap<String, String> expectedHeaders = new HashMap<>();
@@ -69,8 +49,7 @@ public class UpdateFileCommandHandlerTest {
 				.setBody("{\"name\":\"newName\"}")
 				.createCgcRequest();
 
-		verify(httpClient)
-				.patch(expected);
+		assertThat(result).isEqualTo(expected);
 
 	}
 }
