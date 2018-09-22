@@ -48,6 +48,7 @@ public class KeyValueToJsonParserTest {
 		keyValues.put("key2", "value2");
 		keyValues.put("key3", "tag1,tag2,tag3");
 		keyValues.put("key4", "value4");
+		keyValues.put("metadata.key1.key2", "value");
 
 		// when
 		final String result = parser.getBody(keyValues);
@@ -58,7 +59,8 @@ public class KeyValueToJsonParserTest {
 						"\"key1\":\"value1\"," +
 						"\"key2\":\"value2\"," +
 						"\"key3\":[\"tag1\",\"tag2\",\"tag3\"]," +
-						"\"key4\":\"value4\"" +
+						"\"key4\":\"value4\"," +
+						"\"metadata\":{\"key1\": {\"key2\": \"value\"}}" +
 				"}",
 				result,
 				JSONCompareMode.NON_EXTENSIBLE);
@@ -76,6 +78,38 @@ public class KeyValueToJsonParserTest {
 		// then
 		JSONAssert.assertEquals(
 				"{\"array\":[\"tag1\",\"tag2\",\"tag3\"]}",
+				result,
+				JSONCompareMode.NON_EXTENSIBLE);
+	}
+
+	@Test
+	public void shouldParseDotInKeyAsNestedJsonObjects() throws Exception {
+
+		// given
+		Map<String, String> keyValues = singletonMap("metadata.key", "value");
+
+		// when
+		final String result = parser.getBody(keyValues);
+
+		// then
+		JSONAssert.assertEquals(
+				"{\"metadata\":{\"key\": \"value\"}}",
+				result,
+				JSONCompareMode.NON_EXTENSIBLE);
+	}
+
+	@Test
+	public void shouldParseDotInKeyAsMultipleNestedJsonObjects() throws Exception {
+
+		// given
+		Map<String, String> keyValues = singletonMap("metadata.key1.key2", "value");
+
+		// when
+		final String result = parser.getBody(keyValues);
+
+		// then
+		JSONAssert.assertEquals(
+				"{\"metadata\":{\"key1\": {\"key2\": \"value\"}}}",
 				result,
 				JSONCompareMode.NON_EXTENSIBLE);
 	}
