@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 
 public class KeyValueToJsonParser {
 
+	public static final String ARRAY_ELEMENT_SEPARATOR = ",";
+
 	public String getBody(Map<String, String> keyValues) {
 
 		final Map<String, Object> remapped = keyValues.entrySet()
@@ -27,9 +29,9 @@ public class KeyValueToJsonParser {
 	private Object mapValueToObjectOrArray(Map.Entry<String, String> entry) {
 		final String value = entry.getValue();
 
-		if (value.contains(",")) {
+		if (value.contains(ARRAY_ELEMENT_SEPARATOR)) {
 
-			final Object[] arrayElements = Stream.of(value.split(","))
+			final Object[] arrayElements = Stream.of(value.split(ARRAY_ELEMENT_SEPARATOR))
 					.map(String::trim)
 					.toArray();
 
