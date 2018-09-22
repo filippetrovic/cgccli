@@ -22,7 +22,8 @@ public class UpdateFileRequestBuilderTest {
 	public void setUp() throws Exception {
 		requestBuilder = new RequestBuilder(
 				"https://cgc-api.sbgenomics.com/v2/files/{file}",
-				Collections.singleton("file"));
+				Collections.singleton("file"),
+				new KeyValueToJsonParser());
 	}
 
 	@Test

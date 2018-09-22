@@ -7,6 +7,7 @@ import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.JsonResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
+import org.cancergenomicscloud.cli.handler.KeyValueToJsonParser;
 import org.cancergenomicscloud.cli.handler.RequestBuilder;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
@@ -28,6 +29,7 @@ public class EntryPoint {
 		final StringOutput output = new SystemOutStringOutput();
 		final CommandArgumentsParser argumentsParser = new CommandArgumentsParser();
 		final CommandKeyValuesParser keyValuesParser = new CommandKeyValuesParser();
+		final KeyValueToJsonParser keyValueParser = new KeyValueToJsonParser();
 
 		try {
 
@@ -36,7 +38,8 @@ public class EntryPoint {
 							new CommandHandlerImpl(
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/projects",
-											Collections.emptySet()),
+											Collections.emptySet(),
+											keyValueParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -44,7 +47,8 @@ public class EntryPoint {
 							new CommandHandlerImpl(
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files",
-											Collections.emptySet()),
+											Collections.emptySet(),
+											keyValueParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -52,7 +56,8 @@ public class EntryPoint {
 							new CommandHandlerImpl(
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
-											Collections.singleton("file")),
+											Collections.singleton("file"),
+											keyValueParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -60,7 +65,8 @@ public class EntryPoint {
 							new CommandHandlerImpl(
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
-											Collections.singleton("file")),
+											Collections.singleton("file"),
+											keyValueParser),
 									httpClient::patch,
 									formatter,
 									output))

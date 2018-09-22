@@ -24,7 +24,8 @@ public class ListProjectsRequestBuilderTest {
 	public void setUp() throws Exception {
 		requestBuilder = new RequestBuilder(
 				"https://cgc-api.sbgenomics.com/v2/projects",
-				Collections.emptySet());
+				Collections.emptySet(),
+				new KeyValueToJsonParser());
 	}
 
 	@Test
