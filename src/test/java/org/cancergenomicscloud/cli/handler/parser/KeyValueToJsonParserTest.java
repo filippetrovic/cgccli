@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonMap;
 
 /**
  * Created by Filip.
@@ -45,7 +46,7 @@ public class KeyValueToJsonParserTest {
 		Map<String, String> keyValues = new HashMap<>();
 		keyValues.put("key1", "value1");
 		keyValues.put("key2", "value2");
-		keyValues.put("key3", "value3");
+		keyValues.put("key3", "tag1,tag2,tag3");
 		keyValues.put("key4", "value4");
 
 		// when
@@ -56,9 +57,25 @@ public class KeyValueToJsonParserTest {
 				"{" +
 						"\"key1\":\"value1\"," +
 						"\"key2\":\"value2\"," +
-						"\"key3\":\"value3\"," +
+						"\"key3\":[\"tag1\",\"tag2\",\"tag3\"]," +
 						"\"key4\":\"value4\"" +
 				"}",
+				result,
+				JSONCompareMode.NON_EXTENSIBLE);
+	}
+
+	@Test
+	public void shouldParseArrayWithSpacesBetweenElements() throws Exception {
+
+		// given
+		Map<String, String> keyValues = singletonMap("array", " tag1, tag2,tag3 ");
+
+		// when
+		final String result = parser.getBody(keyValues);
+
+		// then
+		JSONAssert.assertEquals(
+				"{\"array\":[\"tag1\",\"tag2\",\"tag3\"]}",
 				result,
 				JSONCompareMode.NON_EXTENSIBLE);
 	}
