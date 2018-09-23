@@ -5,12 +5,16 @@ import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.cancergenomicscloud.cli.http.CgcResponse;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
+import org.json.JSONObject;
 
 /**
  * Created by Filip.
  */
 
 public class FileDownloadCommandHandler implements CliCommandHandler {
+
+	private static final String JSON_URL_KEY = "url";
+	private static final int HTTP_OK = 200;
 
 	private final RequestBuilder requestBuilder;
 	private final HttpClient httpClient;
@@ -44,15 +48,16 @@ public class FileDownloadCommandHandler implements CliCommandHandler {
 	}
 
 	private boolean failed(CgcResponse fileInfoResponse) {
-		return fileInfoResponse.getStatusCode() != 200;
+		return fileInfoResponse.getStatusCode() != HTTP_OK;
 	}
 
+	// TODO: Candidate for extraction: single responsibility principle
 	private CgcRequest buildFileDownloadRequest(CgcResponse fileInfoResponse) {
 		return new CgcRequestBuilder(extractFileDownloadUrl(fileInfoResponse.getResult()))
 				.createCgcRequest();
 	}
 
 	private String extractFileDownloadUrl(String result) {
-		return "https://sb-datasets-us-east-1.s3.amazonaws.com/blah/blah";
+		return new JSONObject(result).getString(JSON_URL_KEY);
 	}
 }

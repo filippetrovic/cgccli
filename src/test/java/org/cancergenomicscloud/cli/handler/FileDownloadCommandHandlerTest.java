@@ -57,9 +57,7 @@ public class FileDownloadCommandHandlerTest {
 				.setHeaders(singletonMap("X-SBG-Auth-Token", "token123"))
 				.createCgcRequest();
 
-		final String outputString = "{\"url\": \"https://sb-datasets-us-east-1.s3.amazonaws.com/blah/blah\"}";
-
-		final CgcResponse response = CgcResponse.of(outputString, 200, "OK");
+		final CgcResponse response = CgcResponse.of("{\"url\": \"https://sb-datasets-us-east-1.s3.amazonaws.com/blah/blah\"}", 200, "OK");
 
 		final CgcRequest downloadFileRequest = new CgcRequestBuilder("https://sb-datasets-us-east-1.s3.amazonaws.com/blah/blah")
 //				.setHeaders(singletonMap("X-SBG-Auth-Token", "token123"))
