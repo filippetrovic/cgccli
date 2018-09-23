@@ -73,6 +73,9 @@ public class CommandHandlerImplTest {
 		handler.handleCommand(command);
 
 		// then
+		verify(requestBuilder)
+				.buildRequest(command);
+
 		verify(httpClient)
 				.get(request);
 

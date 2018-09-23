@@ -63,6 +63,11 @@ public class UnirestHttpClient implements HttpClient {
 	}
 
 	@Override
+	public CgcResponse downloadFile(CgcRequest request, String fileDestination) {
+		return CgcResponse.of("", 200, "OK");
+	}
+
+	@Override
 	public void shutdown() throws Exception {
 		Unirest.shutdown();
 	}
