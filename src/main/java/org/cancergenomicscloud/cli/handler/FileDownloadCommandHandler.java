@@ -15,6 +15,7 @@ public class FileDownloadCommandHandler implements CliCommandHandler {
 
 	private static final String JSON_URL_KEY = "url";
 	private static final int HTTP_OK = 200;
+	private static final String DESTINATION_ARGUMENT_KEY = "dest";
 
 	private final RequestBuilder requestBuilder;
 	private final HttpClient httpClient;
@@ -41,7 +42,7 @@ public class FileDownloadCommandHandler implements CliCommandHandler {
 		final CgcRequest fileDownloadRequest = buildFileDownloadRequest(fileInfoResponse);
 
 		final CgcResponse downloadFileResponse = httpClient
-				.downloadFile(fileDownloadRequest, command.getCommandArguments().get("dest"));
+				.downloadFile(fileDownloadRequest, command.getCommandArguments().get(DESTINATION_ARGUMENT_KEY));
 
 		stringOutput.print(downloadFileResponse.getStatusCodeText());
 
