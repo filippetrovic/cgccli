@@ -78,8 +78,7 @@ public class EntryPoint {
 											Collections.singleton("file"),
 											jsonBodyGenerator),
 									httpClient,
-									output
-									))
+									output))
 					.create();
 
 			cgcCli.execute(args);
