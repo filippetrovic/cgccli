@@ -1,6 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
-import org.cancergenomicscloud.cli.handler.parser.KeyValueToJsonParser;
+import org.cancergenomicscloud.cli.handler.parser.JsonBodyGenerator;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class GetFileStatsRequestBuilderTest {
 		requestBuilder = new RequestBuilder(
 				"https://cgc-api.sbgenomics.com/v2/files/{file}",
 				Collections.singleton("file"),
-				new KeyValueToJsonParser());
+				new JsonBodyGenerator());
 	}
 
 	@Test

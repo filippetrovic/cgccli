@@ -1,6 +1,6 @@
 package org.cancergenomicscloud.cli.handler;
 
-import org.cancergenomicscloud.cli.handler.parser.KeyValueToJsonParser;
+import org.cancergenomicscloud.cli.handler.parser.JsonBodyGenerator;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 
@@ -23,9 +23,9 @@ public class RequestBuilder {
 
 	private final String path;
 	private final Set<String> pathVariables;
-	private final KeyValueToJsonParser keyValueParser;
+	private final JsonBodyGenerator keyValueParser;
 
-	public RequestBuilder(String path, Set<String> pathVariables, KeyValueToJsonParser keyValueParser) {
+	public RequestBuilder(String path, Set<String> pathVariables, JsonBodyGenerator keyValueParser) {
 		this.path = path;
 		this.pathVariables = pathVariables;
 		this.keyValueParser = keyValueParser;
@@ -39,7 +39,7 @@ public class RequestBuilder {
 
 		if (bodyExists(command)) {
 
-			cgcRequestBuilder.setBody(keyValueParser.getBody(command.getCommandKeyValues()));
+			cgcRequestBuilder.setBody(keyValueParser.getBodyAsJson(command.getCommandKeyValues()));
 
 			Map<String, String> headers = new HashMap<>();
 			headers.put(X_SBG_AUTH_TOKEN, command.getAuthToken());

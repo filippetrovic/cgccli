@@ -15,13 +15,13 @@ import static java.util.Collections.singletonMap;
  * Created by Filip.
  */
 
-public class KeyValueToJsonParser {
+public class JsonBodyGenerator {
 
 	public static final String ARRAY_ELEMENT_SEPARATOR = ",";
 	public static final String KEY_NESTING_SEPARATOR = ".";
 	public static final String KEY_NESTING_SEPARATOR_REGEX = "\\.";
 
-	public String getBody(Map<String, String> keyValues) {
+	public String getBodyAsJson(Map<String, String> keyValues) {
 
 		final Map<String, Object> remapped = keyValues.entrySet()
 				.stream()

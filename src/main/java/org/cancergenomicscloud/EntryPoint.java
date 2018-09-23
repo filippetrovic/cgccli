@@ -9,7 +9,7 @@ import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
 import org.cancergenomicscloud.cli.handler.FileDownloadCommandHandler;
 import org.cancergenomicscloud.cli.handler.RequestBuilder;
-import org.cancergenomicscloud.cli.handler.parser.KeyValueToJsonParser;
+import org.cancergenomicscloud.cli.handler.parser.JsonBodyGenerator;
 import org.cancergenomicscloud.cli.http.HttpClient;
 import org.cancergenomicscloud.cli.output.StringOutput;
 import org.cancergenomicscloud.cli.parser.CliArgumentsParser;
@@ -30,7 +30,7 @@ public class EntryPoint {
 		final StringOutput output = new SystemOutStringOutput();
 		final CommandArgumentsParser argumentsParser = new CommandArgumentsParser();
 		final CommandKeyValuesParser keyValuesParser = new CommandKeyValuesParser();
-		final KeyValueToJsonParser keyValueToJsonParser = new KeyValueToJsonParser();
+		final JsonBodyGenerator jsonBodyGenerator = new JsonBodyGenerator();
 
 		try {
 
@@ -40,7 +40,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/projects",
 											Collections.emptySet(),
-											keyValueToJsonParser),
+											jsonBodyGenerator),
 									httpClient::get,
 									formatter,
 									output))
@@ -49,7 +49,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files",
 											Collections.emptySet(),
-											keyValueToJsonParser),
+											jsonBodyGenerator),
 									httpClient::get,
 									formatter,
 									output))
@@ -58,7 +58,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
 											Collections.singleton("file"),
-											keyValueToJsonParser),
+											jsonBodyGenerator),
 									httpClient::get,
 									formatter,
 									output))
@@ -67,7 +67,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
 											Collections.singleton("file"),
-											keyValueToJsonParser),
+											jsonBodyGenerator),
 									httpClient::patch,
 									formatter,
 									output))
@@ -76,7 +76,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}/download_info",
 											Collections.singleton("file"),
-											keyValueToJsonParser),
+											jsonBodyGenerator),
 									httpClient,
 									output
 									))

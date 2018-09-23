@@ -14,13 +14,13 @@ import static java.util.Collections.singletonMap;
 /**
  * Created by Filip.
  */
-public class KeyValueToJsonParserTest {
+public class JsonBodyGeneratorTest {
 
-	private KeyValueToJsonParser parser;
+	private JsonBodyGenerator parser;
 
 	@Before
 	public void setUp() {
-		parser = new KeyValueToJsonParser();
+		parser = new JsonBodyGenerator();
 	}
 
 	@Test
@@ -30,7 +30,7 @@ public class KeyValueToJsonParserTest {
 		Map<String, String> keyValues = emptyMap();
 
 		// when
-		final String result = parser.getBody(keyValues);
+		final String result = parser.getBodyAsJson(keyValues);
 
 		// then
 		JSONAssert.assertEquals(
@@ -51,7 +51,7 @@ public class KeyValueToJsonParserTest {
 		keyValues.put("metadata.key1.key2", "value");
 
 		// when
-		final String result = parser.getBody(keyValues);
+		final String result = parser.getBodyAsJson(keyValues);
 
 		// then
 		JSONAssert.assertEquals(
@@ -73,7 +73,7 @@ public class KeyValueToJsonParserTest {
 		Map<String, String> keyValues = singletonMap("array", " tag1, tag2,tag3 ");
 
 		// when
-		final String result = parser.getBody(keyValues);
+		final String result = parser.getBodyAsJson(keyValues);
 
 		// then
 		JSONAssert.assertEquals(
@@ -89,7 +89,7 @@ public class KeyValueToJsonParserTest {
 		Map<String, String> keyValues = singletonMap("metadata.key", "value");
 
 		// when
-		final String result = parser.getBody(keyValues);
+		final String result = parser.getBodyAsJson(keyValues);
 
 		// then
 		JSONAssert.assertEquals(
@@ -105,7 +105,7 @@ public class KeyValueToJsonParserTest {
 		Map<String, String> keyValues = singletonMap("metadata.key1.key2", "value");
 
 		// when
-		final String result = parser.getBody(keyValues);
+		final String result = parser.getBodyAsJson(keyValues);
 
 		// then
 		JSONAssert.assertEquals(
