@@ -43,7 +43,7 @@ public class FileDownloadCommandHandler implements CliCommandHandler {
 
 	}
 
-	public boolean failed(CgcResponse fileInfoResponse) {
+	private boolean failed(CgcResponse fileInfoResponse) {
 		return fileInfoResponse.getStatusCode() != 200;
 	}
 
