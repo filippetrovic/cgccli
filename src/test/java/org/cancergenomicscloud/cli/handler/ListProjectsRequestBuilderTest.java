@@ -1,6 +1,5 @@
 package org.cancergenomicscloud.cli.handler;
 
-import org.cancergenomicscloud.cli.handler.parser.JsonBodyGenerator;
 import org.cancergenomicscloud.cli.http.CgcRequest;
 import org.cancergenomicscloud.cli.http.CgcRequestBuilder;
 import org.junit.Before;
