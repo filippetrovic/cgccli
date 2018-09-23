@@ -7,6 +7,7 @@ import org.cancergenomicscloud.cli.CgcCliBuilder;
 import org.cancergenomicscloud.cli.formatter.CliResponseFormatter;
 import org.cancergenomicscloud.cli.formatter.ResponseFormatter;
 import org.cancergenomicscloud.cli.handler.CommandHandlerImpl;
+import org.cancergenomicscloud.cli.handler.FileDownloadCommandHandler;
 import org.cancergenomicscloud.cli.handler.RequestBuilder;
 import org.cancergenomicscloud.cli.handler.parser.KeyValueToJsonParser;
 import org.cancergenomicscloud.cli.http.HttpClient;
@@ -29,7 +30,7 @@ public class EntryPoint {
 		final StringOutput output = new SystemOutStringOutput();
 		final CommandArgumentsParser argumentsParser = new CommandArgumentsParser();
 		final CommandKeyValuesParser keyValuesParser = new CommandKeyValuesParser();
-		final KeyValueToJsonParser keyValueParser = new KeyValueToJsonParser();
+		final KeyValueToJsonParser keyValueToJsonParser = new KeyValueToJsonParser();
 
 		try {
 
@@ -39,7 +40,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/projects",
 											Collections.emptySet(),
-											keyValueParser),
+											keyValueToJsonParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -48,7 +49,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files",
 											Collections.emptySet(),
-											keyValueParser),
+											keyValueToJsonParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -57,7 +58,7 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
 											Collections.singleton("file"),
-											keyValueParser),
+											keyValueToJsonParser),
 									httpClient::get,
 									formatter,
 									output))
@@ -66,10 +67,19 @@ public class EntryPoint {
 									new RequestBuilder(
 											"https://cgc-api.sbgenomics.com/v2/files/{file}",
 											Collections.singleton("file"),
-											keyValueParser),
+											keyValueToJsonParser),
 									httpClient::patch,
 									formatter,
 									output))
+					.withHandler("files download",
+							new FileDownloadCommandHandler(
+									new RequestBuilder(
+											"https://cgc-api.sbgenomics.com/v2/files/{file}/download_info",
+											Collections.singleton("file"),
+											keyValueToJsonParser),
+									httpClient,
+									output
+									))
 					.create();
 
 			cgcCli.execute(args);
